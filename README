@@ -8,8 +8,8 @@ BQTDraw is a temporary name and will (WILL) be replaced later.  It stands for
 Bitmap Quad Tree on which the storage file format is based.
 
 BQTDraw is a program for digital art.  It has two main focuses:
- ¥  Speediness to allow use on lower-end platforms such as tablets
- ¥  WYSIWYG format for illustration for print, with possible future support for
+ -  Speediness to allow use on lower-end platforms such as tablets
+ -  WYSIWYG format for illustration for print, with possible future support for
     digital-targeted illustration.
 
 ////////////////////////////////////////////////////////////////////////////////
