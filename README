@@ -12,4 +12,9 @@ BQTDraw is a program for digital art.  It has two main focuses:
  -  WYSIWYG format for illustration for print, with possible future support for
     digital-targeted illustration.
 
+BQTDraw will end up sharing significant backbone code with the currently
+closed-source CEE [ http://jadematrix.wordpress.com/portfolio/software/cee/ ],
+as they share very similar low-level needs and are both primarily authored by
+Joseph Durel.
+
 ////////////////////////////////////////////////////////////////////////////////
