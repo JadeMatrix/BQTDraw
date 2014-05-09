@@ -25,7 +25,7 @@ clean:
 # TODO: Consider using a perl script for nicer output
 #| awk -F: '{ print $$1":"$$2":\n    "; for(i=3;i<NF;i++){printf " %s", $$i} printf "\n" }'
 todo:
-	grep -n "TODO:" *.*
+	grep -nr --include \* "TODO:[ ]\+" .  # Using '[ ]' so the grep line is ignored by grep
 
 ################################################################################
 
@@ -54,7 +54,11 @@ windows:
 
 ################################################################################
 
-build: ${OBJDIR}/bqt_main.o ${OBJDIR}/bqt_launchargs.o ${OBJDIR}/bqt_exception.o
+# ${OBJDIR}/bqt_.o
+
+build: ${OBJDIR}/bqt_main.o ${OBJDIR}/bqt_launchargs.o ${OBJDIR}/bqt_exception.o \
+	   ${OBJDIR}/bqt_threadutil.o ${OBJDIR}/bqt_thread.o ${OBJDIR}/bqt_mutex.o \
+	   ${OBJDIR}/bqt_condition.o ${OBJDIR}/bqt_semaphore.o
 	mkdir -p ${BUILDDIR}
 	${CPP} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $?
 
