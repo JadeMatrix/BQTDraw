@@ -54,7 +54,7 @@ windows:
 
 ################################################################################
 
-build: ${OBJDIR}/bqt_main.o
+build: ${OBJDIR}/bqt_main.o ${OBJDIR}/bqt_launchargs.o ${OBJDIR}/bqt_exception.o
 	mkdir -p ${BUILDDIR}
 	${CPP} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $?
 
