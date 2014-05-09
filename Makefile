@@ -40,11 +40,11 @@ osx: build
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/MacOS"
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources/Images"
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources/Scripts"
-	cp "Info.plist" "${MAKEDIR}/${APPNAME}/Contents/Info.plist"
-	cp "launch.sh" "${MAKEDIR}/${APPNAME}/Contents/MacOS/launch.sh"
-	cp "${BUILDDIR}/{$PROJNAME}" "${MAKEDIR}/${APPNAME}/Contents/MacOS/${PROJNAME}"
+	cp "${RESOURCEDIR}/Info.plist" "${MAKEDIR}/${APPNAME}/Contents/Info.plist"
+	cp "${SOURCEDIR}/launch.sh" "${MAKEDIR}/${APPNAME}/Contents/MacOS/launch.sh"
+	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${APPNAME}/Contents/MacOS/${PROJNAME}"
 	echo ${PKGINFOSTRING} > "${MAKEDIR}/${APPNAME}/Contents/PkgInfo"
-	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/{$PROJNAME}_app.icns"
+	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/${PROJNAME}_app.icns"
 
 linux:
 	# Not supported yet
@@ -54,13 +54,14 @@ windows:
 
 ################################################################################
 
-build: prebuild ${OBJDIR}/bqt_main.o
+build: ${OBJDIR}/bqt_main.o
+	mkdir -p ${BUILDDIR}
 	${CPP} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $?
 
 ################################################################################
 
-${OBJDIR}/%.o: %.cpp
-        mkdir -p ${OBJDIR}
-        ${CPP} -c $? -o $*
+${OBJDIR}/%.o: ${SOURCEDIR}/%.cpp
+	mkdir -p ${OBJDIR}
+	${CPP} -c $? -o ${OBJDIR}/$*.o
 
 
