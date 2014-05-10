@@ -17,4 +17,7 @@ closed-source CEE [ http://jadematrix.wordpress.com/portfolio/software/cee/ ],
 as they share very similar low-level needs and are both primarily authored by
 Joseph Durel.
 
+FastFormat by Matthew Wilson is used for text output formatting in place of
+std::cout; more info can be found at [ http://fastformat.sourceforge.net/ ].
+
 ////////////////////////////////////////////////////////////////////////////////

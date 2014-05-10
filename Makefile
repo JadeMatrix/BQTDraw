@@ -5,7 +5,7 @@
 
 # Compiler(s)
 CC = gcc
-CPP = g++
+CPPC = g++
 
 # Directories
 SOURCEDIR = src
@@ -14,8 +14,13 @@ MAKEDIR = make
 OBJDIR = ${MAKEDIR}/object
 BUILDDIR = ${MAKEDIR}/build
 
-# Linked librarires
-LINKS = ""
+# Fast format build version folder
+FFBUILD = gcc40.mac.x64
+FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
+
+# Headers & librarires
+INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
+LINKS = 
 
 ################################################################################
 
@@ -54,18 +59,41 @@ windows:
 
 ################################################################################
 
+CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
+				${OBJDIR}/bqt_exception.o \
+				${OBJDIR}/bqt_launchargs.o \
+				${OBJDIR}/bqt_main.o \
+				${OBJDIR}/bqt_mutex.o \
+				${OBJDIR}/bqt_semaphore.o \
+				${OBJDIR}/bqt_threadutil.o \
+				${OBJDIR}/bqt_thread.o
+
+# Not sure how many of these we need, so include all of them
+FF_OBJECTS =	${FFOBJDIR}/core.api.o \
+				${FFOBJDIR}/core.fmt_cache.o \
+				${FFOBJDIR}/core.fmt_spec_defect_handlers.o \
+				${FFOBJDIR}/core.init_code_strings.o \
+				${FFOBJDIR}/core.mempool.o \
+				${FFOBJDIR}/core.replacements.o \
+				${FFOBJDIR}/core.snprintf.o
+
+################################################################################
+
 # ${OBJDIR}/bqt_.o
 
-build: ${OBJDIR}/bqt_main.o ${OBJDIR}/bqt_launchargs.o ${OBJDIR}/bqt_exception.o \
-	   ${OBJDIR}/bqt_threadutil.o ${OBJDIR}/bqt_thread.o ${OBJDIR}/bqt_mutex.o \
-	   ${OBJDIR}/bqt_condition.o ${OBJDIR}/bqt_semaphore.o
+build: ${CORE_OBJECTS}
+	make fastformat
 	mkdir -p ${BUILDDIR}
-	${CPP} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $?
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $? ${FF_OBJECTS}
+
+# Making FastFormat assumes you have FASTFORMAT_ROOT and STLSOFT set as specified in the FastFormat INSTALL.txt
+fastformat:
+	cd ${FFOBJDIR}; make build.libs.core
 
 ################################################################################
 
 ${OBJDIR}/%.o: ${SOURCEDIR}/%.cpp
 	mkdir -p ${OBJDIR}
-	${CPP} -c $? -o ${OBJDIR}/$*.o
+	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/$*.o
 
 
