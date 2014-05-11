@@ -1,6 +1,3 @@
-# Info for using homebrew's clang:
-# http://stackoverflow.com/questions/14128298/homebrew-gcc-llvm-and-c11
-
 ################################################################################
 
 # Compiler(s)
@@ -43,8 +40,7 @@ PKGINFOSTRING = APPL????
 
 osx: build
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/MacOS"
-	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources/Images"
-	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources/Scripts"
+	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources"
 	cp "${RESOURCEDIR}/Info.plist" "${MAKEDIR}/${APPNAME}/Contents/Info.plist"
 	cp "${SOURCEDIR}/launch.sh" "${MAKEDIR}/${APPNAME}/Contents/MacOS/launch.sh"
 	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${APPNAME}/Contents/MacOS/${PROJNAME}"
@@ -65,6 +61,8 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_main.o \
 				${OBJDIR}/bqt_mutex.o \
 				${OBJDIR}/bqt_semaphore.o \
+				${OBJDIR}/bqt_taskexec.o \
+				${OBJDIR}/bqt_taskqueue.o \
 				${OBJDIR}/bqt_threadutil.o \
 				${OBJDIR}/bqt_thread.o
 
