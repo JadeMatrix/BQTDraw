@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "bqt_main.h"
+#import "bqt_appdelegate_cocoa.h"
 
 /******************************************************************************//******************************************************************************/
 
@@ -18,7 +19,16 @@ int main( int argc, char* argv[] )
 {
     bqt_parseLaunchArgs( argc, argv );
     
-    return NSApplicationMain( argc, ( const char** )argv );
+    NSAutoreleasePool* pool = [ [ NSAutoreleasePool alloc ] init ];
+    NSApplication* application = [ NSApplication sharedApplication ];
+    
+    AppDelegate * applicationDelegate = [ [ [ AppDelegate alloc ] init ] autorelease ];
+    [ application setDelegate:applicationDelegate ];
+    [ application run ];
+    
+    [ pool drain ];
+    
+    return 0;
 }
 
 

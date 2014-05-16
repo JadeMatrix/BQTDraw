@@ -5,7 +5,7 @@
 # CPPC = g++
 # OBJCC = gcc
 CC = /usr/local/Cellar/llvm/3.4/bin/clang
-CPPC = ${CC}++
+CPPC = ${CC}++ -stdlib=libstdc++
 OBJCC = ${CC}
 
 # Directories
