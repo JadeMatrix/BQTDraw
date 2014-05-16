@@ -1,3 +1,7 @@
+move design doc & todo list to GitHub wiki
+
+use Objective-C++ for Cocoa wrappers
+
 use references as members where applicable
 
 decide on a name, change name in code, improve the icon
