@@ -3,6 +3,7 @@
 # Compiler(s)
 CC = gcc
 CPPC = g++
+OBJCC = gcc
 
 # Directories
 SOURCEDIR = src
@@ -17,7 +18,8 @@ FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = 
+LINKS = -lobjc
+FRAMEWORKS = -framework Foundation -framework AppKit
 
 ################################################################################
 
@@ -65,7 +67,9 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_taskexec.o \
 				${OBJDIR}/bqt_taskqueue.o \
 				${OBJDIR}/bqt_threadutil.o \
-				${OBJDIR}/bqt_thread.o
+				${OBJDIR}/bqt_thread.o \
+				${OBJDIR}/osx_AppDelegate.o \
+				${OBJDIR}/osx_bqt_main_cocoa.o
 
 # Not sure how many of these we need, so include all of them
 FF_OBJECTS =	${FFOBJDIR}/core.api.o \
@@ -83,7 +87,7 @@ FF_OBJECTS =	${FFOBJDIR}/core.api.o \
 build: ${CORE_OBJECTS}
 	make fastformat
 	mkdir -p ${BUILDDIR}
-	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $? ${FF_OBJECTS}
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${FRAMEWORKS} ${LINKS} $? ${FF_OBJECTS}
 
 # Making FastFormat assumes you have FASTFORMAT_ROOT and STLSOFT set as specified in the FastFormat INSTALL.txt
 fastformat:
@@ -91,8 +95,12 @@ fastformat:
 
 ################################################################################
 
-${OBJDIR}/%.o: ${SOURCEDIR}/%.cpp
+${OBJDIR}/osx_%.o: ${SOURCEDIR}/%.m
 	mkdir -p ${OBJDIR}
-	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/$*.o
+	${OBJCC} -c ${INCLUDE} $? -o ${OBJDIR}/osx_$*.o
+
+${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
+	mkdir -p ${OBJDIR}
+	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.o
 
 

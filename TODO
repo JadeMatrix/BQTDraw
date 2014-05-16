@@ -1,3 +1,6 @@
 use references as members where applicable
 
 decide on a name, change name in code, improve the icon
+
+implement bqt internal storage
+implement bqt file parsing
