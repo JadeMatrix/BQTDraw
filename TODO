@@ -8,3 +8,14 @@ decide on a name, change name in code, improve the icon
 
 implement bqt internal storage
 implement bqt file parsing
+
+
+
+
+Cocoa OpenGL & stuff:
+https://developer.apple.com/library/mac/documentation/graphicsimaging/conceptual/opengl-macprogguide/opengl_drawing/opengl_drawing.html
+https://developer.apple.com/library/mac/samplecode/CocoaGL/Introduction/Intro.html
+https://developer.apple.com/library/mac/documentation/cocoa/reference/ApplicationKit/Classes/NSOpenGLView_Class/Reference/Reference.html
+https://developer.apple.com/library/mac/documentation/cocoa/reference/ApplicationKit/Classes/NSResponder_Class/Reference/Reference.html#//apple_ref/occ/cl/NSResponder
+
+http://philjordan.eu/article/mixing-objective-c-c++-and-objective-c++

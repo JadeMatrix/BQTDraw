@@ -1,9 +1,12 @@
 ################################################################################
 
 # Compiler(s)
-CC = gcc
-CPPC = g++
-OBJCC = gcc
+# CC = gcc
+# CPPC = g++
+# OBJCC = gcc
+CC = /usr/local/Cellar/llvm/3.4/bin/clang
+CPPC = ${CC}++
+OBJCC = ${CC}
 
 # Directories
 SOURCEDIR = src

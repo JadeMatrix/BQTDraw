@@ -39,7 +39,7 @@ namespace bqt
                 }
                 else
                 {
-                    free - count;
+                    free -= count;
                     // count = 0;
                     break;
                 }
