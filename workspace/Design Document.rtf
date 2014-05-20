@@ -12,7 +12,8 @@
 Some random design notes\
 \
 \pard\tx20\tx580\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\li560\fi-560\ql\qnatural\pardirnatural
-\ls1\ilvl0\cf0 {\listtext	\'95	}Blocks are 2^n x 2^n squares of image data; n can be set in the user preferences for best performance.
+\ls1\ilvl0\cf0 \expnd0\expndtw0\kerning0
+{\listtext	\'95	}Blocks are 2^n x 2^n squares of image data; n can be set in the user preferences for best performance.
 \f1 \uc0\u8232 
 \f0 \
 {\listtext	\'95	}When loading a file, each layer image is rendered out at 100% into a sparse grid of blocks (no image data = blank, filled = fill color).  These are used as textures for OpenGL rendering; when a block is updated in RAM only that block is resent to the GPU.  While image data is stored as a compressed bitmap in the file format (1 bit / pixel), it is converted into 8-bit binary representation in RAM (0x00 and 0xFF).  This data is then loaded onto the GPU using
@@ -63,4 +64,22 @@ block updates
 : first compare the undo timestamp in the update task to the block; if it is not lower update the mipmaps for those blocks.  then push undo data (safe as RAM update tasks are only pushed on stroke finish; we also do it every update task instead of just most recent so we don\'92t loose undo data), pull the texture data of the updated layer from the GPU and write it to RAM
 \f1 \uc0\u8232 
 \f0 \
-{\listtext	\'95	}whenever the canvas is redrawn, the mipmap for each unchanged block is drawn; for changed blocks, block textures for layers are rendered separately to composite (this will be a problem once non-binary alpha is introduced - possible to use a shader for nonlinear [ Cs * As + Cd * ( 1 - As ) Ad ] blend then?)}
+{\listtext	\'95	}whenever the canvas is redrawn, the mipmap for each unchanged block is drawn; for changed blocks, block textures for layers are rendered separately to composite (this will be a problem once non-binary alpha is introduced - possible to use a shader for nonlinear [ Cs * As + Cd * ( 1 - As ) Ad ] blend then?)
+\f1 \uc0\u8232 
+\f0 \
+{\listtext	\'95	}antialiasing can be set in user preferences:
+\f1 \uc0\u8232 
+\f0 type (none, etc.)
+\f1 \uc0\u8232 
+\f0 <100% zoom, >100% zoom, both
+\f1 \uc0\u8232 
+\f0 use mipmaps y/n
+\f1 \uc0\u8232 
+\f0 \
+{\listtext	\'95	}canvas uses a semaphore with count = total # of blocks
+\f1 \uc0\u8232 
+\f0 undo sets pending undo flag, acquires semaphore in that order
+\f1 \uc0\u8232 
+\f0 if pending undo flag is set, no edits possible (any action that would result in an edit triggers system error sound)
+\f1 \uc0\u8232 
+\f0 once undo is complete releases semaphore, unsets flag in that order}

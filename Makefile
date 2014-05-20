@@ -71,6 +71,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_taskqueue.o \
 				${OBJDIR}/bqt_threadutil.o \
 				${OBJDIR}/bqt_thread.o \
+				${OBJDIR}/bqt_timestamp.o \
 				${OBJDIR}/osx_bqt_appdelegate_cocoa.o \
 				${OBJDIR}/osx_bqt_main_cocoa.o
 
