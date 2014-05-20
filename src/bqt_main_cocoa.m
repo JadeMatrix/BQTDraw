@@ -19,7 +19,7 @@ int main( int argc, char* argv[] )
 {
     bqt_parseLaunchArgs( argc, argv );
     
-    NSAutoreleasePool* pool = [ [ NSAutoreleasePool alloc ] init ];
+    NSAutoreleasePool*    pool = [ [ NSAutoreleasePool alloc ] init ];
     NSApplication* application = [ NSApplication sharedApplication ];
     
     AppDelegate * applicationDelegate = [ [ [ AppDelegate alloc ] init ] autorelease ];
