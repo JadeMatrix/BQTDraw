@@ -26,6 +26,8 @@
 #include "bqt_mutex.hpp"
 #include "bqt_task.hpp"
 #include "bqt_timestamp.hpp"
+#include "bqt_imagemode.hpp"
+#include "bqt_layer.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -39,15 +41,15 @@ namespace bqt
         class frame                                                             // Class so we get RAII benefits
         {
         protected:
-            void init( /* img_mode* mode, */ frame* previous );
+            void init( img_mode* mode, frame* previous );
         public:
             timestamp stamp;                                                    // Timestamp for frame (value implementation-defined)
             frame* previous;                                                    // Previous frame in undo chain (treated as next in redo)
-            /* img_mode* mode */                                                // Image mode for data, linked from the parent layer (does not change)
+            img_mode* mode;                                                     // Image mode for data, linked from the parent layer (does not change)
             unsigned char* data;                                                // Bitmap data, allocated based on parent layer attributes
             
-            frame( /* img_mode* mode */ );                                      // Constructors always set timestamp to 0
-            frame( /* img_mode* mode, */ frame* previous );
+            frame( img_mode* mode );                                            // Constructors always set timestamp to 0
+            frame( img_mode* mode, frame* previous );
             ~frame();
         };
         
@@ -56,7 +58,7 @@ namespace bqt
         
         timestamp stamp;                                                        // Current timestamp for entire block; updated whenever a new update is QUEUED
         
-        // layer& parent;
+        layer& parent;
         mutex block_mutex;
         
         void pushBackFrames( timestamp stamp );                                 // Sets top frame's stamp, pushes back the frame stack & clears redo data
@@ -67,7 +69,7 @@ namespace bqt
         
         frame* getFrameFromTimestamp( timestamp stamp );                        // Not thread-safe, assumes block_mutex has already been locked
     public:
-        block( /* layer& p */ );
+        block( layer& p );
         ~block();
     };
     

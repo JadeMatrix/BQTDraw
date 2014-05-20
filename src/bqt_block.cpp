@@ -1,7 +1,7 @@
 /* 
  * bqt_block.cpp
  * 
- * About
+ * Implements bqt_block.cpp
  * 
  */
 
@@ -11,6 +11,7 @@
 
 #include "bqt_exception.hpp"
 #include "bqt_taskexec.hpp"
+#include "bqt_launchargs.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -19,25 +20,25 @@ namespace bqt
 /* BLOCK **********************************************************************//******************************************************************************/
     /* FRAME ******************************************************************//******************************************************************************/
     
-    void block::frame::init( /* img_mode* mode, */ frame* previous )
+    void block::frame::init( img_mode* mode, frame* previous )
     {
-        /* this -> mode = mode; */
+        this -> mode = mode;
         this -> previous = previous;
         
-        // TODO: allocate data based on mode, if previous not null copy data
+        data = allocBitmapSpace( mode, getBlockExponent(), ( previous ? previous -> data : NULL ) );
     }
     
-    block::frame::frame( /* img_mode* mode */ )
+    block::frame::frame( img_mode* mode )
     {
-        init( /* img_mode* mode, */ NULL );
+        init( mode, NULL );
     }
-    block::frame::frame( /* img_mode* mode, */ frame* previous )
+    block::frame::frame( img_mode* mode, frame* previous )
     {
-        init( /* img_mode* mode, */ previous );
+        init( mode, previous );
     }
     block::frame::~frame()
     {
-        // TODO: deallocate data based on mode
+        delete[] data;
     }
     
     /**************************************************************************//******************************************************************************/
@@ -63,7 +64,7 @@ namespace bqt
         
         frames -> stamp = stamp;
         
-        frames = new block::frame( /* parent.getMode(), */ frames );
+        frames = new block::frame( parent.getMode(), frames );
         
         delete redo_frames;
     }
@@ -92,11 +93,11 @@ namespace bqt
         shiftFrame( redo_frames, frames );
     }
     
-    block::block( /* layer& p */ ) /* : parent( p ) */
+    block::block( layer& p ) : parent( p )
     {
         // TODO: implement
         
-        frames = new block::frame( /* parent.getMode() */ );
+        frames = new block::frame( parent.getMode() );
         redo_frames = NULL;
     }
     block::~block()
@@ -141,7 +142,7 @@ namespace bqt
     
     PullBlockData_task::PullBlockData_task( UpdateBlock_task& ubt ) : counterpart( ubt )
     {
-        
+        // Nothing else to do
     }
     bool PullBlockData_task::execute( task_mask* caller_mask )
     {

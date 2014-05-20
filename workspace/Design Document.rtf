@@ -13,7 +13,7 @@ Some random design notes\
 \
 \pard\tx20\tx580\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\li560\fi-560\ql\qnatural\pardirnatural
 \ls1\ilvl0\cf0 \expnd0\expndtw0\kerning0
-{\listtext	\'95	}Blocks are 2^n x 2^n squares of image data; n can be set in the user preferences for best performance.
+{\listtext	\'95	}Blocks are 2^n x 2^n squares of image data; n can be set in the user preferences for best performance (requires restart)
 \f1 \uc0\u8232 
 \f0 \
 {\listtext	\'95	}When loading a file, each layer image is rendered out at 100% into a sparse grid of blocks (no image data = blank, filled = fill color).  These are used as textures for OpenGL rendering; when a block is updated in RAM only that block is resent to the GPU.  While image data is stored as a compressed bitmap in the file format (1 bit / pixel), it is converted into 8-bit binary representation in RAM (0x00 and 0xFF).  This data is then loaded onto the GPU using
