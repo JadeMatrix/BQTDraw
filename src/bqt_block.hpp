@@ -4,7 +4,8 @@
 /* 
  * bqt_block.hpp
  * 
- * [ About bqt::block here ]
+ * Contains bqt::block for storing layer block data in RAM, as well as various
+ * utility tasks.
  * 
  * UpdateBlock_task pushes an associated PullBlockData_task on creation; this
  * ensures the latter is queued first.  This is done so that texture pulling
@@ -37,6 +38,7 @@ namespace bqt
     {
         friend class UpdateBlock_task;
         friend class UpdateBlockTexture_task;
+        friend class PullBlockData_task;
     protected:
         class frame                                                             // Class so we get RAII benefits
         {
@@ -50,11 +52,14 @@ namespace bqt
             
             frame( img_mode* mode );                                            // Constructors always set timestamp to 0
             frame( img_mode* mode, frame* previous );
+            frame( img_mode* mode, unsigned char* data );                       // Only used for first frame
             ~frame();
         };
         
         frame* frames;
         frame* redo_frames;                                                     // Each undone frame is pushed to here; cleared & nullified on edit
+        
+        GLuint* channel_textures;
         
         timestamp stamp;                                                        // Current timestamp for entire block; updated whenever a new update is QUEUED
         
@@ -64,12 +69,12 @@ namespace bqt
         void pushBackFrames( timestamp stamp );                                 // Sets top frame's stamp, pushes back the frame stack & clears redo data
         
         void shiftFrame( frame*& from, frame*& to );                            // Utility function for undo/redo
-        void undo();
-        void redo();
+        bool undo();
+        bool redo();
         
         frame* getFrameFromTimestamp( timestamp stamp );                        // Not thread-safe, assumes block_mutex has already been locked
     public:
-        block( layer& p );
+        block( layer& p, unsigned char* data );
         ~block();
     };
     
@@ -104,7 +109,10 @@ namespace bqt
         
         bool execute( task_mask* caller_mask );                                 // Pulls texture from GPU, formats, and fills data in counterpart
         
-        // PRIORITY_NONE
+        task_priority getPriority()
+        {
+            return PRIORITY_HIGH;                                               // Needs to be on the same priority level as drawing so we don't loose data
+        }
         
         task_mask getMask()
         {

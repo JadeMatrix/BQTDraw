@@ -56,6 +56,23 @@ namespace bqt
         
         return data;
     }
+    
+    unsigned char* unpackBitmapFromGPU( img_mode* mode,
+                                        GLuint* channel_textures,
+                                        unsigned char* data )
+    {
+        // TODO: implement
+        
+        return NULL;
+    }
+    GLuint* packBitmapToGPU( img_mode* mode,
+                             GLuint* channel_textures,
+                             unsigned char* data )
+    {
+        // TODO: implement
+        
+        return NULL;
+    }
 }
 
 

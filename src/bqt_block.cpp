@@ -25,7 +25,7 @@ namespace bqt
         this -> mode = mode;
         this -> previous = previous;
         
-        data = allocBitmapSpace( mode, getBlockExponent(), ( previous ? previous -> data : NULL ) );
+        // Does not allocate data, as it will be replaced soon anyways
     }
     
     block::frame::frame( img_mode* mode )
@@ -35,6 +35,12 @@ namespace bqt
     block::frame::frame( img_mode* mode, frame* previous )
     {
         init( mode, previous );
+    }
+    block::frame::frame( img_mode* mode, unsigned char* data )
+    {
+        this -> mode = mode;
+        this -> previous = NULL;
+        this -> data = data;
     }
     block::frame::~frame()
     {
@@ -82,23 +88,39 @@ namespace bqt
         
         to = shift;
     }
-    void block::undo()
+    bool block::undo()
     {
         scoped_lock slock( block_mutex );
-        shiftFrame( frames, redo_frames );
+        
+        if( frames == NULL || frames -> previous == NULL )
+            return false;
+        else
+        {
+            shiftFrame( frames, redo_frames );
+            return true;
+        }
     }
-    void block::redo()
+    bool block::redo()
     {
         scoped_lock slock( block_mutex );
-        shiftFrame( redo_frames, frames );
+        
+        if( redo_frames == NULL )
+            return false;
+        else
+        {
+            shiftFrame( redo_frames, frames );
+            return true;
+        }
     }
     
-    block::block( layer& p ) : parent( p )
+    block::block( layer& p, unsigned char* data ) : parent( p )
     {
-        // TODO: implement
-        
-        frames = new block::frame( parent.getMode() );
+        frames = new block::frame( parent.getMode(), data );
         redo_frames = NULL;
+        
+        channel_textures = NULL;
+        
+        submitTask( new UpdateBlockTexture_task( *this, stamp ) );
     }
     block::~block()
     {
@@ -130,9 +152,7 @@ namespace bqt
             if( ftu == NULL )
                 throw exception( "UpdateBlock_task::execute(): Target block has no frame matching timestamp" );
             else
-            {
-                // TODO: implement
-            }
+                ftu -> data = data;
             
             return true;
         }
@@ -148,7 +168,11 @@ namespace bqt
     {
         scoped_lock slock( counterpart.ubt_mutex );
         
-        // TODO: implement
+        if( counterpart.data != NULL )
+            throw exception( "PullBlockData_task::execute(): Counterpart's data already filled" );
+        
+        counterpart.data = unpackBitmapFromGPU( counterpart.target.parent.getMode(),
+                                                counterpart.target.channel_textures );
         
         return true;
     }
@@ -167,7 +191,9 @@ namespace bqt
             return true;
         else
         {
-            // TODO: implement
+            source.channel_textures = packBitmapToGPU( source.parent.getMode(),
+                                                       source.channel_textures,
+                                                       source.getFrameFromTimestamp( stamp ) -> data );
             
             return true;
         }
