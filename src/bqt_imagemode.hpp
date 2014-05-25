@@ -28,6 +28,7 @@ namespace bqt
     {
         unsigned char channels;                                                 // >= 1, last channel is always Alpha
         unsigned char depth;                                                    // Depth bit count
+        unsigned char dpi;
     };
     
     class block_texture

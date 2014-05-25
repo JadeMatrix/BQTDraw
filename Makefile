@@ -61,8 +61,7 @@ windows:
 ################################################################################
 
 # TODO: consider using macro(s)
-CORE_OBJECTS =	${OBJDIR}/bqt_block.o \
-				${OBJDIR}/bqt_condition.o \
+CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_exception.o \
 				${OBJDIR}/bqt_imagemode.o \
 				${OBJDIR}/bqt_launchargs.o \
@@ -74,6 +73,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_block.o \
 				${OBJDIR}/bqt_threadutil.o \
 				${OBJDIR}/bqt_thread.o \
 				${OBJDIR}/bqt_timestamp.o \
+				${OBJDIR}/bqt_trackable.o \
 				${OBJDIR}/osx_bqt_appdelegate_cocoa.o \
 				${OBJDIR}/osx_bqt_main_cocoa.o
 
