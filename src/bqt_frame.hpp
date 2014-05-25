@@ -1,8 +1,8 @@
-#ifndef BQT_BLOCK_HPP
-#define BQT_BLOCK_HPP
+#ifndef BQT_FRAME_HPP
+#define BQT_FRAME_HPP
 
 /* 
- * bqt_block.hpp
+ * bqt_frame.hpp
  * 
  * About
  * 

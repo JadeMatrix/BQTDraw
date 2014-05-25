@@ -30,18 +30,31 @@ namespace bqt
         unsigned char depth;                                                    // Depth bit count
     };
     
+    class block_texture
+    {
+    public:
+        GLuint comp;                                                            // Composite texture, includes mipmaps
+        GLuint* chan_texs;                                                      // Array of individual textures, may combine channels into single texture(s)
+        img_mode* mode;                                                         // Mode for the block
+        
+        block_texture( img_mode* mode )
+        {
+            comp = 0;
+            chan_texs = NULL;
+            this -> mode = mode;
+        }
+    };
+    
     unsigned char* allocBitmapSpace( img_mode* mode,
                                      unsigned char exponent,
                                      unsigned char* original = NULL );          // Allocate a 2^exp x 2^exp space as an array, copying original if not NULL
     
-    unsigned char* unpackBitmapFromGPU( img_mode* mode,
-                                        GLuint* channel_textures,
+    unsigned char* unpackBitmapFromGPU( block_texture* channel_texture,
                                         unsigned char* data = NULL );           // Unpacks textures and returns them in mode; if data is not NULL writes there
-    GLuint*            packBitmapToGPU( img_mode* mode,
-                                        GLuint* channel_textures,
-                                        unsigned char* data );                  // Packs data in mode into texture(s); if channel_textures is not NULL those
+    block_texture*     packBitmapToGPU( block_texture* channel_texture,
+                                        unsigned char* data );                  // Packs data in mode into texture(s); if channel_textures is filled out those
                                                                                 // textures are used; otherwise new textures are generated; returns the array
-                                                                                // of texture ids.
+                                                                                // of texture ids.  channel_texture contains the mode.
 }
 
 /******************************************************************************//******************************************************************************/

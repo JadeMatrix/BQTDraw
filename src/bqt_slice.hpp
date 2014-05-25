@@ -1,8 +1,8 @@
-#ifndef BQT_BLOCK_HPP
-#define BQT_BLOCK_HPP
+#ifndef BQT_SLICE_HPP
+#define BQT_SLICE_HPP
 
 /* 
- * bqt_block.hpp
+ * bqt_slice.hpp
  * 
  * About
  * 
