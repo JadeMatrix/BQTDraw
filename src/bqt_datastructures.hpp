@@ -1,31 +1,29 @@
-#ifndef BQT_BLOCK_HPP
-#define BQT_BLOCK_HPP
+#ifndef BQT_DATASTRCUTURES_HPP
+#define BQT_DATASTRCUTURES_HPP
 
 /* 
- * bqt_block.hpp
+ * bqt_datastructures.hpp
  * 
- * About
+ * Contains class predeclarations & other useful stuff for internal data storage
+ * structures.
+ * 
+ * 
  * 
  */
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
-#include "bqt_datastructures.hpp"
 
-#include "bqt_gl.hpp"
-#include "bqt_slice.hpp"
 
 /******************************************************************************//******************************************************************************/
 
 namespace bqt
 {
-    class block
-    {
-    protected:
-        GLuint comp;
-        slice* slices;
-    public:
-    };
+    class block;
+    class frame;
+    class slice;
+    class layer;
+    class document;
 }
 
 /******************************************************************************//******************************************************************************/

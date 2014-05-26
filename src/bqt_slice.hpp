@@ -10,20 +10,32 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
+#include "bqt_datastructures.hpp"
+
+#include <deque>
+
 #include "bqt_frame.hpp"
 #include "bqt_timestamp.hpp"
+#include "bqt_trackable.hpp"
+#include "bqt_imagemode.hpp"
 
 /******************************************************************************//******************************************************************************/
 
 namespace bqt
 {
-    class slice
+    class slice : public trackable
     {
     protected:
-        frame* stack;
-        frame* redo_stack;
+        std::deque< frame* > undo_stack;                                        // First (back) is current
+        std::deque< frame* > redo_stack;
         timestamp stamp;
     public:
+        slice( layer& pl, block& pb, unsigned char* data = NULL );              // If data null, allocates all 0's based on the layer's mode
+        
+        int undo();
+        int redo();
+        int undo( timestamp stamp );
+        int redo( timestamp stamp );
     };
 }
 

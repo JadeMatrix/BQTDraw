@@ -10,6 +10,9 @@ implement bqt internal storage
 implement bqt file parsing
 
 
+implement change tracking for legal evidence - will require either 'real' timestamps or being able to change from 'counter' to 'real' timestamps on a per-document basis (former is probably more realistic - just change bqt::timestamp to au unsigned long or something)
+
+
 
 
 Cocoa OpenGL & stuff:

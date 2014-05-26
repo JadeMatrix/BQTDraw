@@ -10,8 +10,11 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
+#include "bqt_datastructures.hpp"
+
 #include "bqt_gl.hpp"
 #include "bqt_timestamp.hpp"
+#include "bqt_imagemode.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -22,7 +25,6 @@ namespace bqt
     protected:
         GLuint comp;
         timestamp stamp;
-        frame* previous
         unsigned char* data;                                                    // Bitmap data, allocated based on parent layer attributes
     public:
         frame( img_mode* mode );                                                // Constructors always set timestamp to 0
