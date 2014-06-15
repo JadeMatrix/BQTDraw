@@ -4,7 +4,7 @@
 /* 
  * bqt_slice.hpp
  * 
- * About
+ * slices do not store their own position
  * 
  */
 
@@ -12,30 +12,32 @@
 
 #include "bqt_datastructures.hpp"
 
-#include <deque>
+#include <vector>
 
-#include "bqt_frame.hpp"
+#include "bqt_block.hpp"
 #include "bqt_timestamp.hpp"
-#include "bqt_trackable.hpp"
 #include "bqt_imagemode.hpp"
 
 /******************************************************************************//******************************************************************************/
 
 namespace bqt
 {
-    class slice : public trackable
+    class slice
     {
     protected:
-        std::deque< frame* > undo_stack;                                        // First (back) is current
-        std::deque< frame* > redo_stack;
-        timestamp stamp;
-    public:
-        slice( layer& pl, block& pb, unsigned char* data = NULL );              // If data null, allocates all 0's based on the layer's mode
+        struct subslice
+        {
+            block* source;
+            float x_off;                                                        // As a fraction of slice widths
+            float y_off;                                                        // As a fraction of slice heights
+        };
         
-        int undo();
-        int redo();
-        int undo( timestamp stamp );
-        int redo( timestamp stamp );
+        std::vector< subslice > subslices;
+        
+        GLuint comp;                                                            // Comp is updated whenever zoom increases enough (~2x)
+        float zoom;
+    public:
+        void draw( float zoom );                                                // Pass the current zoom so we know when it changes
     };
 }
 

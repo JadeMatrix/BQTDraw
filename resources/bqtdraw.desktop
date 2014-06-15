@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=BQTDraw
+GenericName=Bitmap Editor
+Comment=BQTDraw is a program geared towards illustration for print.
+Exec="__BQTDRAW_DIR__/Linux/BQTDraw" -l../BQTDraw.txt -d -t2
+Icon="__BQTDRAW_DIR__/Resources/BQT_app_512p.png"
+Terminal=false
+Type=Application
+Categories=Graphics;

@@ -13,7 +13,7 @@
 #include "bqt_datastructures.hpp"
 
 #include "bqt_gl.hpp"
-#include "bqt_slice.hpp"
+#include "bqt_sketch.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -22,9 +22,13 @@ namespace bqt
     class block
     {
     protected:
-        GLuint comp;
-        slice* slices;
+        class frame
+        {
+        public:
+        };
+        sketch& parent_sketch;
     public:
+        sketch& getSketch();
     };
 }
 

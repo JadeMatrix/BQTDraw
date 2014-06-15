@@ -1,10 +1,24 @@
 ################################################################################
+# 
+# Variables to configure:
+# 
+# CC 		C compiler with std flags (CC++ is C++ compiler)
+# FFBUILD	Platform-specific, for example gcc40.mac.x64 for OS X
+# 
+################################################################################
+
+# Making FastFormat assumes you have FASTFORMAT_ROOT and STLSOFT set as speci-
+# fied in the FastFormat INSTALL.txt
+ifndef STLSOFT
+$(error STLSOFT must be defined)
+endif
+ifndef FASTFORMAT_ROOT
+$(error FASTFORMAT_ROOT must be defined)
+endif
 
 # Compiler(s)
-# CC = gcc
-# CPPC = g++
-# OBJCC = gcc
-CC = /usr/local/Cellar/llvm/3.4/bin/clang
+# CC = /usr/local/Cellar/llvm/3.4/bin/clang
+CC = clang
 CPPC = ${CC}++ -stdlib=libstdc++
 OBJCC = ${CC}
 
@@ -16,12 +30,14 @@ OBJDIR = ${MAKEDIR}/object
 BUILDDIR = ${MAKEDIR}/build
 
 # Fast format build version folder
-FFBUILD = gcc40.mac.x64
+# TODO: set using Autotools
+# FFBUILD = gcc40.mac.x64
+FFBUILD = gcc47.unix
 FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = -lobjc
+LINKS = -lpthread
 FRAMEWORKS = -framework Foundation -framework AppKit
 
 ################################################################################
@@ -43,7 +59,7 @@ PKGINFOSTRING = APPL????
 
 ################################################################################
 
-osx: build
+osx: build_osx
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/MacOS"
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources"
 	cp "${RESOURCEDIR}/Info.plist" "${MAKEDIR}/${APPNAME}/Contents/Info.plist"
@@ -52,8 +68,12 @@ osx: build
 	echo ${PKGINFOSTRING} > "${MAKEDIR}/${APPNAME}/Contents/PkgInfo"
 	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/${PROJNAME}_app.icns"
 
-linux:
-	# Not supported yet
+linux: build_linux
+	mkdir -p "${MAKEDIR}/${PROJNAME}/Linux"
+	mkdir -p "${MAKEDIR}/${PROJNAME}/Resources"
+	cp "${RESOURCEDIR}/bqtdraw.desktop" "${MAKEDIR}/${PROJNAME}/bqtdraw.desktop"
+	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${PROJNAME}/Linux/${PROJNAME}"
+	cp "${RESOURCEDIR}/${PROJNAME}_app_512p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_512p.png"
 
 windows:
 	# Not supported yet
@@ -73,10 +93,16 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_threadutil.o \
 				${OBJDIR}/bqt_thread.o \
 				${OBJDIR}/bqt_timestamp.o \
-				${OBJDIR}/bqt_trackable.o \
-				${OBJDIR}/osx_bqt_appdelegate_cocoa.o \
-				${OBJDIR}/osx_bqt_main_cocoa.o
+				${OBJDIR}/bqt_trackable.o
 
+OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
+				${OBJDIR}/cocoa_main.o
+
+LINUX_OBJECTS =	${OBJDIR}/unix_main.o
+
+# FastFormat is statically linked due to the non-standard build methods the
+# project uses.  Until it is updated to use Autotools it should remain statical-
+# ly linked for ease of (precompiled binary) distribution.
 # Not sure how many of these we need, so include all of them
 FF_OBJECTS =	${FFOBJDIR}/core.api.o \
 				${FFOBJDIR}/core.fmt_cache.o \
@@ -90,20 +116,28 @@ FF_OBJECTS =	${FFOBJDIR}/core.api.o \
 
 # ${OBJDIR}/bqt_.o
 
-build: ${CORE_OBJECTS}
+build_osx: ${CORE_OBJECTS} ${OSX_OBJECTS}
 	make fastformat
 	mkdir -p ${BUILDDIR}
-	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${FRAMEWORKS} ${LINKS} $? ${FF_OBJECTS}
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${FRAMEWORKS} ${LINKS} -lobjc $? ${FF_OBJECTS}
 
-# Making FastFormat assumes you have FASTFORMAT_ROOT and STLSOFT set as specified in the FastFormat INSTALL.txt
+build_linux: ${CORE_OBJECTS} ${LINUX_OBJECTS}
+	make fastformat
+	mkdir -p ${BUILDDIR}
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $? ${FF_OBJECTS}
+
 fastformat:
 	cd ${FFOBJDIR}; make build.libs.core
 
 ################################################################################
 
-${OBJDIR}/osx_%.o: ${SOURCEDIR}/%.m
+${OBJDIR}/unix_%.o: ${SOURCEDIR}/unix_%.cpp
 	mkdir -p ${OBJDIR}
-	${OBJCC} -c ${INCLUDE} $? -o ${OBJDIR}/osx_$*.o
+	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/unix_$*.o
+
+${OBJDIR}/cocoa_%.o: ${SOURCEDIR}/cocoa_%.m
+	mkdir -p ${OBJDIR}
+	${OBJCC} -c ${INCLUDE} $? -o ${OBJDIR}/cocoa_$*.o
 
 ${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
 	mkdir -p ${OBJDIR}

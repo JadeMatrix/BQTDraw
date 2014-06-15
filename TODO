@@ -1,6 +1,8 @@
 move design doc & todo list to GitHub wiki
 
-use Objective-C++ for Cocoa wrappers
+Use Autotools
+
+use Objective-C++ for Cocoa wrappers (?)
 
 use references as members where applicable
 
@@ -8,6 +10,8 @@ decide on a name, change name in code, improve the icon
 
 implement bqt internal storage
 implement bqt file parsing
+
+launch arg for recording history 0 none 1 metadata 2 full history
 
 
 implement change tracking for legal evidence - will require either 'real' timestamps or being able to change from 'counter' to 'real' timestamps on a per-document basis (former is probably more realistic - just change bqt::timestamp to au unsigned long or something)

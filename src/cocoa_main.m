@@ -17,18 +17,21 @@
 
 int main( int argc, char* argv[] )
 {
-    bqt_parseLaunchArgs( argc, argv );
-    
-    NSAutoreleasePool*    pool = [ [ NSAutoreleasePool alloc ] init ];
-    NSApplication* application = [ NSApplication sharedApplication ];
-    
-    AppDelegate * applicationDelegate = [ [ [ AppDelegate alloc ] init ] autorelease ];
-    [ application setDelegate:applicationDelegate ];
-    [ application run ];
-    
-    [ pool drain ];
-    
-    return 0;
+    if( bqt_parseLaunchArgs( argc, argv ) )
+    {
+        NSAutoreleasePool*    pool = [ [ NSAutoreleasePool alloc ] init ];
+        NSApplication* application = [ NSApplication sharedApplication ];
+        
+        AppDelegate * applicationDelegate = [ [ [ AppDelegate alloc ] init ] autorelease ];
+        [ application setDelegate:applicationDelegate ];
+        [ application run ];
+        
+        [ pool drain ];
+        
+        return 0;
+    }
+    else
+        return -1;
 }
 
 
