@@ -143,4 +143,8 @@ ${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
 	mkdir -p ${OBJDIR}
 	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.o
 
+################################################################################
+
+.PHONY: fastformat build_linux build_osx osx linux windows clean todo
+
 
