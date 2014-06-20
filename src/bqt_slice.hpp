@@ -32,7 +32,8 @@ namespace bqt
             float y_off;                                                        // As a fraction of slice heights
         };
         
-        std::vector< subslice > subslices;
+        // std::vector< subslice > subslices;
+        subslice* subslices;
         
         GLuint comp;                                                            // Comp is updated whenever zoom increases enough (~2x)
         float zoom;
