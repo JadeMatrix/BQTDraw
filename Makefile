@@ -63,7 +63,7 @@ osx: build_osx
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/MacOS"
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources"
 	cp "${RESOURCEDIR}/Info.plist" "${MAKEDIR}/${APPNAME}/Contents/Info.plist"
-	cp "${SOURCEDIR}/launch.sh" "${MAKEDIR}/${APPNAME}/Contents/MacOS/launch.sh"
+	cp "${SOURCEDIR}/launch_osx.sh" "${MAKEDIR}/${APPNAME}/Contents/MacOS/launch_osx.sh"
 	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${APPNAME}/Contents/MacOS/${PROJNAME}"
 	echo ${PKGINFOSTRING} > "${MAKEDIR}/${APPNAME}/Contents/PkgInfo"
 	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/${PROJNAME}_app.icns"
@@ -71,7 +71,7 @@ osx: build_osx
 linux: build_linux
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Linux"
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Resources"
-	cp "${RESOURCEDIR}/bqtdraw.desktop" "${MAKEDIR}/${PROJNAME}/bqtdraw.desktop"
+	cp "${RESOURCEDIR}/install_linux.sh" "${MAKEDIR}/${PROJNAME}/install_linux.sh"
 	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${PROJNAME}/Linux/${PROJNAME}"
 	cp "${RESOURCEDIR}/${PROJNAME}_app_512p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_512p.png"
 

@@ -390,7 +390,7 @@
      style="display:inline;opacity:1">
     <rect
        style="color:#000000;fill:none;stroke:#00ff00;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="BQT_app_512p"
+       id="BQTDraw_app_512p"
        width="512"
        height="512"
        x="0"
@@ -401,12 +401,12 @@
        x="512"
        height="256"
        width="256"
-       id="BQT_app_256p"
+       id="BQTDraw_app_256p"
        style="color:#000000;fill:none;stroke:#00ff00;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        inkscape:label="#rect2989" />
     <rect
        style="color:#000000;fill:none;stroke:#00ff00;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="BQT_app_128p"
+       id="BQTDraw_app_128p"
        width="128"
        height="128"
        x="768"
@@ -421,7 +421,7 @@
        style="color:#000000;fill:none;stroke:#00ff00;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <rect
        style="color:#000000;fill:none;stroke:#00ff00;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="BQT_app_32p"
+       id="BQTDraw_app_32p"
        width="32"
        height="32"
        x="960"
@@ -432,7 +432,7 @@
        x="992"
        height="16"
        width="16"
-       id="BQT_app_16p"
+       id="BQTDraw_app_16p"
        style="color:#000000;fill:none;stroke:#00ff00;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        inkscape:label="#rect3666" />
   </g>
@@ -476,7 +476,7 @@
              transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)"
              width="638.04932"
              height="368.37378"
-             xlink:href="file:///Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
+             xlink:href="file:///home/jadematrix/Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
              id="image3745"
              x="-673.99261"
              y="-273.2822" />
@@ -536,7 +536,7 @@
              y="-273.2822"
              x="-673.99261"
              id="image4731"
-             xlink:href="file:///Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
+             xlink:href="file:///home/jadematrix/Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
              height="368.37378"
              width="638.04932"
              transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)" />
@@ -596,7 +596,7 @@
              transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)"
              width="638.04932"
              height="368.37378"
-             xlink:href="file:///Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
+             xlink:href="file:///home/jadematrix/Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
              id="image4757"
              x="-673.99261"
              y="-273.2822" />
@@ -656,7 +656,7 @@
              y="-273.2822"
              x="-673.99261"
              id="image4783"
-             xlink:href="file:///Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
+             xlink:href="file:///home/jadematrix/Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
              height="368.37378"
              width="638.04932"
              transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)" />
@@ -706,7 +706,7 @@
              transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)"
              width="638.04932"
              height="368.37378"
-             xlink:href="file:///Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
+             xlink:href="file:///home/jadematrix/Developer/BQTDraw/workspace/hs-2009-25-i-xlarge_web.jpg"
              id="image4815"
              x="-673.99261"
              y="-273.2822" />

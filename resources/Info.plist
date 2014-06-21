@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>launch.sh</string>
+	<string>launch_osx.sh</string>
 	<key>CFBundleIconFile</key>
 	<string>BQTDraw_app.icns</string>
 	<key>CFBundleIdentifier</key>
