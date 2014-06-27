@@ -19,6 +19,24 @@
 
 /******************************************************************************//******************************************************************************/
 
+// R = 1 - ( C * ( 1 - K ) + K )
+// G = 1 - ( M * ( 1 - K ) + K )
+// B = 1 - ( Y * ( 1 - K ) + K )
+
+// 1 - ( a * ( 1 - b ) + b )
+// 1 - a( 1 - b ) - b
+// 1 - a + ab - b
+// 1 - a + b( a - 1 )
+// ( 1 - a ) - b( 1 - a )
+// ( 1 - a )( 1 - b )
+
+// V = 1 - K;
+// R = K * ( 1 - C );
+// G = K * ( 1 - M );
+// B = K * ( 1 - Y );
+
+// RGB -> CMYK is not easy, we need to preserve data
+
 namespace bqt
 {
     class block : public trackable
@@ -27,7 +45,8 @@ namespace bqt
         class frame
         {
         public:
-            GLuint* comps;                                                      // Array of [1] for now (RGBA), to be expanded to channel mixes later
+            GLuint view_comp;
+            GLuint* data_comps;
             raw data;
             image_mode& mode;
             

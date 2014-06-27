@@ -1,0 +1,30 @@
+0.1 (alpha)
+    - Current
+
+0.2
+    - Canvas drawing
+    - Bitmap storage in RAM
+
+0.3
+    - RAM/GPU synching
+    - BQT file format support
+
+1.0
+    - Proper name
+    - Black & white illustration
+    - Layers
+    - Sketches
+    - Basic dynamic brushes
+
+2.0
+    - Multi-channel color (CMYK)
+    - Patterns
+    - Shader-based dynamic brushes
+
+3.0
+    - Arbitrary color channels
+    - Plugins for brushes via shader programs
+    - General scripting with Python
+
+4.0
+    - Possible vector brush support

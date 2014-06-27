@@ -30,22 +30,9 @@ namespace
 
 namespace bqt
 {
-    /** BLOCK_TEXTURE *********************************************************//******************************************************************************/
-    
-    // void block_texture::unpackFromGPU()
-    // {
-    //     // TODO: implement
-    // }
-    // void block_texture::packToGPU()
-    // {
-    //     // TODO: implement
-    // }
-    
-    /**************************************************************************//******************************************************************************/
-    
-    unsigned char* allocBitmapSpace( img_mode* mode,
-                                     unsigned char exponent,
-                                     unsigned char* original )
+    raw allocBitmapSpace( img_mode* mode,
+                          unsigned char exponent,
+                          raw original )
     {
         if( mode == NULL || exponent < BLOCKEXPONENT_MIN || exponent > BLOCKEXPONENT_MAX )
             throw exception( "allocBitmapSpace(): Invalid parameters" );
