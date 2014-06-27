@@ -10,16 +10,20 @@
 #include "bqt_imagemode.hpp"
 
 #include <cmath>
+#include <queue>
 
 #include "bqt_exception.hpp"
+#include "bqt_mutex.hpp"
+#include "bqt_launchargs.hpp"
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/
 
 namespace
 {
-    // Swap space for packing/unpacking?
     // We only ever need enough space for raw data for OpenGL to read/write for
     // the block size(s).
+    std::queue< bqt::pack_space > pack_spaces;
+    bqt::mutex pack_space_mutex;
 }
 
 /******************************************************************************//******************************************************************************/
@@ -72,22 +76,38 @@ namespace bqt
         return data;
     }
     
-    // unsigned char* unpackBitmapFromGPU( img_mode* mode,
-    //                                     GLuint* channel_textures,
-    //                                     unsigned char* data )
-    // {
-    //     // TODO: implement
+    pack_space allocPackSpace()
+    {
+        scoped_lock slock( pack_space_mutex );
         
-    //     return NULL;
-    // }
-    // GLuint* packBitmapToGPU( img_mode* mode,
-    //                          GLuint* channel_textures,
-    //                          unsigned char* data )
-    // {
-    //     // TODO: implement
+        pack_space got;
         
-    //     return NULL;
-    // }
+        if( pack_spaces.size() > 0 )
+        {
+            got = pack_spaces.front();
+            pack_spaces.pop();
+        }
+        else
+            got = new float[ 4 * ( int )pow( 2, getBlockExponent() * 2 ) ];     // No registration involved
+        
+        return got;
+    }
+    void releasePackSpace( pack_space s )
+    {
+        scoped_lock slock( pack_space_mutex );
+        
+        pack_spaces.push( s );
+    }
+    void cleanPackSpaces()
+    {
+        scoped_lock slock( pack_space_mutex );                                  // Thread safe so we can use it for debug, optimization, etc.
+        
+        while( !pack_spaces.empty() )
+        {
+            delete pack_spaces.front();
+            pack_spaces.pop();
+        }
+    }
 }
 
 

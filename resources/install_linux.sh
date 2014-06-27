@@ -29,7 +29,7 @@ xdg-icon-resource install --size 128 "${PROGDIR}/Resources/${PROGNAME}_app_128p.
 xdg-icon-resource install --size 256 "${PROGDIR}/Resources/${PROGNAME}_app_256p.png" ${ICONNAME}
 xdg-icon-resource install --size 512 "${PROGDIR}/Resources/${PROGNAME}_app_512p.png" ${ICONNAME}
 
-# TODO: Linux icon sizes: 16, 22, 32, 48, 64, 128
+# TODO: icon sizes 22, 48 & 64
 
 rm ${DESKTOP_FILE}
 rm -R ${TEMP_DIR}

@@ -32,34 +32,15 @@ namespace bqt
     };                                                                          // Bytes = ( channels * depth + 7 ) / 8
     
     typedef unsigned char* raw;
-    
-    // class block_texture
-    // {
-    // public:
-    //     GLuint comps*;                                                          // Composite textures, includes mipmaps - first is RGBA
-    //     raw data;                                                               // Raw pixel data in mode
-    //     img_mode& mode;                                                         // Mode for the block
-        
-    //     block_texture( img_mode* m, raw d = NULL ) : mode( m )
-    //     {
-    //         comp = 0;
-    //         this -> data = d;
-    //     }
-        
-    //     void unpackFromGPU();
-    //     void packToGPU();
-    // };
+    typedef float* pack_space;
     
     raw allocBitmapSpace( img_mode* mode,
                           unsigned char exponent,
                           raw original = NULL );                                // Allocate a 2^exp x 2^exp space as an array, copying original if not NULL
     
-    // raw        unpackBitmapFromGPU( block_texture* channel_texture,
-    //                                 raw data = NULL );                          // Unpacks textures and returns them in mode; if data is not NULL writes there
-    // block_texture* packBitmapToGPU( block_texture* channel_texture,
-    //                                 raw data );                                 // Packs data in mode into texture(s); if channel_textures is filled out those
-    //                                                                             // textures are used; otherwise new textures are generated; returns the array
-    //                                                                             // of texture ids.  channel_texture contains the mode.
+    pack_space allocPackSpace();                                                // Returns a 4 * bsize * sizeof( float ) chunk of memory
+    void releasePackSpace( pack_space s );                                      // Releases memory claimed by allocPackSpace()
+    void cleanPackSpaces();                                                     // Cleans up memory preallocated to packing; call as part of termination
 }
 
 /******************************************************************************//******************************************************************************/
