@@ -18,12 +18,27 @@
 namespace
 {
     // Swap space for packing/unpacking?
+    // We only ever need enough space for raw data for OpenGL to read/write for
+    // the block size(s).
 }
 
 /******************************************************************************//******************************************************************************/
 
 namespace bqt
 {
+    /** BLOCK_TEXTURE *********************************************************//******************************************************************************/
+    
+    // void block_texture::unpackFromGPU()
+    // {
+    //     // TODO: implement
+    // }
+    // void block_texture::packToGPU()
+    // {
+    //     // TODO: implement
+    // }
+    
+    /**************************************************************************//******************************************************************************/
+    
     unsigned char* allocBitmapSpace( img_mode* mode,
                                      unsigned char exponent,
                                      unsigned char* original )
@@ -57,22 +72,22 @@ namespace bqt
         return data;
     }
     
-    unsigned char* unpackBitmapFromGPU( img_mode* mode,
-                                        GLuint* channel_textures,
-                                        unsigned char* data )
-    {
-        // TODO: implement
+    // unsigned char* unpackBitmapFromGPU( img_mode* mode,
+    //                                     GLuint* channel_textures,
+    //                                     unsigned char* data )
+    // {
+    //     // TODO: implement
         
-        return NULL;
-    }
-    GLuint* packBitmapToGPU( img_mode* mode,
-                             GLuint* channel_textures,
-                             unsigned char* data )
-    {
-        // TODO: implement
+    //     return NULL;
+    // }
+    // GLuint* packBitmapToGPU( img_mode* mode,
+    //                          GLuint* channel_textures,
+    //                          unsigned char* data )
+    // {
+    //     // TODO: implement
         
-        return NULL;
-    }
+    //     return NULL;
+    // }
 }
 
 

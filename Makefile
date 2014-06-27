@@ -59,11 +59,19 @@ PKGINFOSTRING = APPL????
 
 ################################################################################
 
+osx_install: osx
+	cp -ar "${MAKEDIR}/${APPNAME}" "/Applications/${APPNAME}"
+
+linux_install: linux
+	cd "${MAKEDIR}/${PROJNAME}"; sudo ./install_linux.sh
+
+################################################################################
+
 osx: build_osx
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/MacOS"
 	mkdir -p "${MAKEDIR}/${APPNAME}/Contents/Resources"
 	cp "${RESOURCEDIR}/Info.plist" "${MAKEDIR}/${APPNAME}/Contents/Info.plist"
-	cp "${SOURCEDIR}/launch_osx.sh" "${MAKEDIR}/${APPNAME}/Contents/MacOS/launch_osx.sh"
+	cp "${RESOURCEDIR}/launch_osx.sh" "${MAKEDIR}/${APPNAME}/Contents/MacOS/launch_osx.sh"
 	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${APPNAME}/Contents/MacOS/${PROJNAME}"
 	echo ${PKGINFOSTRING} > "${MAKEDIR}/${APPNAME}/Contents/PkgInfo"
 	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/${PROJNAME}_app.icns"

@@ -4,7 +4,7 @@
 /* 
  * bqt_quartet.hpp
  * 
- * About
+ * Data quartet struct for simplifying data access in file parsing
  * 
  */
 

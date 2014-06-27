@@ -29,33 +29,37 @@ namespace bqt
         unsigned char channels;                                                 // >= 1, last channel is always Alpha
         unsigned char depth;                                                    // Depth bit count
         unsigned char dpi;
-    };
+    };                                                                          // Bytes = ( channels * depth + 7 ) / 8
     
-    class block_texture
-    {
-    public:
-        GLuint comp;                                                            // Composite texture, includes mipmaps
-        GLuint* chan_texs;                                                      // Array of individual textures, may combine channels into single texture(s)
-        img_mode* mode;                                                         // Mode for the block
+    typedef unsigned char* raw;
+    
+    // class block_texture
+    // {
+    // public:
+    //     GLuint comps*;                                                          // Composite textures, includes mipmaps - first is RGBA
+    //     raw data;                                                               // Raw pixel data in mode
+    //     img_mode& mode;                                                         // Mode for the block
         
-        block_texture( img_mode* mode )
-        {
-            comp = 0;
-            chan_texs = NULL;
-            this -> mode = mode;
-        }
-    };
+    //     block_texture( img_mode* m, raw d = NULL ) : mode( m )
+    //     {
+    //         comp = 0;
+    //         this -> data = d;
+    //     }
+        
+    //     void unpackFromGPU();
+    //     void packToGPU();
+    // };
     
-    unsigned char* allocBitmapSpace( img_mode* mode,
-                                     unsigned char exponent,
-                                     unsigned char* original = NULL );          // Allocate a 2^exp x 2^exp space as an array, copying original if not NULL
+    raw allocBitmapSpace( img_mode* mode,
+                          unsigned char exponent,
+                          raw original = NULL );                                // Allocate a 2^exp x 2^exp space as an array, copying original if not NULL
     
-    unsigned char* unpackBitmapFromGPU( block_texture* channel_texture,
-                                        unsigned char* data = NULL );           // Unpacks textures and returns them in mode; if data is not NULL writes there
-    block_texture*     packBitmapToGPU( block_texture* channel_texture,
-                                        unsigned char* data );                  // Packs data in mode into texture(s); if channel_textures is filled out those
-                                                                                // textures are used; otherwise new textures are generated; returns the array
-                                                                                // of texture ids.  channel_texture contains the mode.
+    // raw        unpackBitmapFromGPU( block_texture* channel_texture,
+    //                                 raw data = NULL );                          // Unpacks textures and returns them in mode; if data is not NULL writes there
+    // block_texture* packBitmapToGPU( block_texture* channel_texture,
+    //                                 raw data );                                 // Packs data in mode into texture(s); if channel_textures is filled out those
+    //                                                                             // textures are used; otherwise new textures are generated; returns the array
+    //                                                                             // of texture ids.  channel_texture contains the mode.
 }
 
 /******************************************************************************//******************************************************************************/
