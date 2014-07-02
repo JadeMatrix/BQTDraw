@@ -14,7 +14,7 @@ cat << EOF > ${DESKTOP_FILE}
 Version=1.0
 Name=${PROGNAME}
 GenericName=Bitmap Editor
-Comment=${PROGNAME} is a program geared towards illustration for print.
+Comment=Art program geared towards speed and illustration for print.
 Exec="${PROGDIR}/Linux/${PROGNAME}" -l~/.BQTDraw_log.txt -d
 Icon=${ICONNAME}
 Terminal=false

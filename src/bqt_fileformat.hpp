@@ -1,32 +1,24 @@
-#ifndef BQT_QUARTET_HPP
-#define BQT_QUARTET_HPP
+#ifndef BQT_FILEFORMAT_HPP
+#define BQT_FILEFORMAT_HPP
 
 /* 
- * bqt_quartet.hpp
+ * bqt_fileformat.hpp
  * 
- * Data quartet struct for simplifying data access in file parsing
+ * About
  * 
  */
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
-// #include <cstdint>
+
 
 /******************************************************************************//******************************************************************************/
 
 namespace bqt
 {
-    struct quartet
-    {
-        union
-        {
-            // uint8_t quarter[ 4 ];
-            // uint16_t   half[ 2 ];
-            // uint32_t   full[ 0 ];
-        };
-    };
+    typedef int document;                                                       // Temporary handle
     
-    #define QUARTET_TAG( q ) q.quarter[ 0 ]
+    document* openBQTFile( const char* fn );
 }
 
 /******************************************************************************//******************************************************************************/

@@ -2,12 +2,17 @@
     - Current
 
 0.2
-    - Canvas drawing
     - Bitmap storage in RAM
+    - BQT file format support
 
 0.3
     - RAM/GPU synching
-    - BQT file format support
+    - Canvas drawing
+    ? Task thread arresting
+    ? Child tasks
+
+0.4
+    - GUI drawing
 
 1.0
     - Proper name
