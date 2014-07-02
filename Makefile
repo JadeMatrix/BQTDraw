@@ -37,7 +37,7 @@ FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = -lpthread
+LINKS = -lpthread -lSDL2
 FRAMEWORKS = -framework Foundation -framework AppKit
 
 ################################################################################
@@ -76,7 +76,8 @@ osx: build_osx
 	echo ${PKGINFOSTRING} > "${MAKEDIR}/${APPNAME}/Contents/PkgInfo"
 	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/${PROJNAME}_app.icns"
 
-linux: build_linux
+# linux: build_linux
+linux: build_sdl2
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Linux"
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Resources"
 	cp "${RESOURCEDIR}/install_linux.sh" "${MAKEDIR}/${PROJNAME}/install_linux.sh"
@@ -109,6 +110,8 @@ OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 
 LINUX_OBJECTS =	${OBJDIR}/unix_main.o
 
+SDL2_OBJECTS =	${OBJDIR}/sdl2_main.o
+
 # FastFormat is statically linked due to the non-standard build methods the
 # project uses.  Until it is updated to use Autotools it should remain statical-
 # ly linked for ease of (precompiled binary) distribution.
@@ -125,6 +128,11 @@ FF_OBJECTS =	${FFOBJDIR}/core.api.o \
 
 # ${OBJDIR}/bqt_.o
 
+build_sdl2: ${CORE_OBJECTS} ${SDL2_OBJECTS}
+	make fastformat
+	mkdir -p ${BUILDDIR}
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $? ${FF_OBJECTS}
+
 build_osx: ${CORE_OBJECTS} ${OSX_OBJECTS}
 	make fastformat
 	mkdir -p ${BUILDDIR}
@@ -139,6 +147,10 @@ fastformat:
 	cd ${FFOBJDIR}; make build.libs.core
 
 ################################################################################
+
+${OBJDIR}/sdl2_%.o: ${SOURCEDIR}/sdl2_%.cpp
+	mkdir -p ${OBJDIR}
+	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/sdl2_$*.o
 
 ${OBJDIR}/unix_%.o: ${SOURCEDIR}/unix_%.cpp
 	mkdir -p ${OBJDIR}
