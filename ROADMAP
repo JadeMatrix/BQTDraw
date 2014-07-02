@@ -25,6 +25,7 @@
     - Multi-channel color (CMYK)
     - Patterns
     - Shader-based dynamic brushes
+    ? Move from SDL2 to platform-specific code
 
 3.0
     - Arbitrary color channels
