@@ -103,7 +103,8 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_threadutil.o \
 				${OBJDIR}/bqt_thread.o \
 				${OBJDIR}/bqt_timestamp.o \
-				${OBJDIR}/bqt_trackable.o
+				${OBJDIR}/bqt_trackable.o \
+				${OBJDIR}/bqt_window.o
 
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 				${OBJDIR}/cocoa_main.o

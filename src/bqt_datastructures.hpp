@@ -27,17 +27,21 @@
  * DPI than their parent layer, but it must be 1/(2^n) of the parent DPI for
  * some exponent n, and the apparent image size remains the same.
  * Tracks:
- * mode changes (channel count, DPI)
+ * mode changes (channel count, DPI, size, offset)
  * 
  * Layer:
  * A collection of sketches, at least one of which is visible.  Contains the
  * base DPI for the sketch collection, the document offset, and the downsampling
  * method to be used on export if the layer is a higher DPI than the canvas.
  * Tracks:
- * sketch switching/relayering (DPI changes tracked by children)
+ * sketch switching/relayering (DPI changes tracked by children), layer name
  * 
- * Canvas (Document):
- * 
+ * Canvas:
+ * Class that handles all information about an open BQT file/document, and can
+ * be attached to a window.
+ * Tracks:
+ * layer switching (important - don't be like Photoshop), layer reordering,
+ * canvas DPI & size, background color
  * 
  */
 
