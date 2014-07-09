@@ -82,6 +82,10 @@ linux: build_sdl2
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Resources"
 	cp "${RESOURCEDIR}/install_linux.sh" "${MAKEDIR}/${PROJNAME}/install_linux.sh"
 	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${PROJNAME}/Linux/${PROJNAME}"
+	cp "${RESOURCEDIR}/${PROJNAME}_app_16p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_16p.png"
+	cp "${RESOURCEDIR}/${PROJNAME}_app_32p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_32p.png"
+	cp "${RESOURCEDIR}/${PROJNAME}_app_128p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_128p.png"
+	cp "${RESOURCEDIR}/${PROJNAME}_app_256p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_256p.png"
 	cp "${RESOURCEDIR}/${PROJNAME}_app_512p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_512p.png"
 
 windows:
