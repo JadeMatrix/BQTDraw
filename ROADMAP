@@ -8,7 +8,6 @@
 0.3
     - RAM/GPU synching
     - Canvas drawing
-    ? Task thread arresting
     ? Child tasks
 
 0.4

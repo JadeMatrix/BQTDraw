@@ -91,6 +91,7 @@ windows:
 
 # TODO: consider using macro(s)
 CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
+				${OBJDIR}/bqt_events.o \
 				${OBJDIR}/bqt_exception.o \
 				${OBJDIR}/bqt_fileformat.o \
 				${OBJDIR}/bqt_imagemode.o \

@@ -1,8 +1,8 @@
-#ifndef BQT_EVENT_HPP
-#define BQT_EVENT_HPP
+#ifndef BQT_WINDOWEVENT_HPP
+#define BQT_WINDOWEVENT_HPP
 
 /* 
- * bqt_event.hpp
+ * bqt_windowevent.hpp
  * 
  * Events are for general actions on windows and not on the program as a whole.
  * This means they include clicks, drags, etc. but not file opening, quitting,
@@ -18,7 +18,7 @@
 
 namespace bqt
 {
-    enum event_id
+    enum wevent_id
     {
         CLICK,
         DRAG,
@@ -27,12 +27,33 @@ namespace bqt
         TEXT
     };
     
-    struct event
+    // TODO: Very much a work in progress
+    struct window_event
     {
-        event_id id;
+        wevent_id id;
         union
         {
-            
+            struct
+            {
+                unsigned int position[ 2 ];
+            } click;
+            struct
+            {
+                unsigned int start[ 2 ];
+                unsigned int end[ 2 ];
+            } drag;
+            struct
+            {
+                unsigned int position[ 2 ];
+            } drop;
+            struct
+            {
+                
+            } command;
+            struct
+            {
+                
+            } text;
         } data;
     };
 }
