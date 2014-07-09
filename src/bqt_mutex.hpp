@@ -26,6 +26,7 @@ namespace bqt
         friend class condition;
     protected:
         pthread_mutex_t pt_mutex;
+        pthread_mutexattr_t pt_attr;
     public:
         mutex();
         ~mutex();
