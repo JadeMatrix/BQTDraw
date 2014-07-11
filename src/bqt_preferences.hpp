@@ -22,10 +22,19 @@
 namespace bqt
 {
     void loadPreferencesFile( std::string f );
+    void resetToDefaults();
     
     bool tryQuitOnNoWindow();
     bool getQuitOnNoWindows();
     void setQuitOnNoWindows( bool s );
+    
+    bool          tryBlockExponent();
+    unsigned char getBlockExponent();                                           // Get the block size exponent: blocks are 2^exp x 2^exp textures
+    void          setBlockExponent( unsigned char e );
+    
+    bool tryMaxUndoSteps();
+    long getMaxUndoSteps();                                                     // Get the max number of undos; -1 for unlimited
+    void setMaxUndoSteps( long s );
 }
 
 /******************************************************************************//******************************************************************************/

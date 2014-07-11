@@ -14,7 +14,7 @@
 
 #include "bqt_exception.hpp"
 #include "bqt_mutex.hpp"
-#include "bqt_launchargs.hpp"
+#include "bqt_preferences.hpp"
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/
 
@@ -51,7 +51,7 @@ namespace bqt
         
         if( original != NULL )
         {
-            for( unsigned int i = 0; ; i++ )                                    // We don't check i < bytes_i because bytes_i could be MAX_UINT
+            for( unsigned int i = 0; ; ++i )                                    // We don't check i < bytes_i because bytes_i could be MAX_UINT
             {
                 data[ i ] = original[ i ];
                 

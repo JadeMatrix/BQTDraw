@@ -9,8 +9,24 @@
 
 #include "bqt_preferences.hpp"
 
+#include <cmath>
+
 #include "bqt_mutex.hpp"
 #include "bqt_log.hpp"
+#include "bqt_imagemode.hpp"
+#include "bqt_exception.hpp"
+#include "bqt_launchargs.hpp"
+
+/* DEFAULTS *******************************************************************//******************************************************************************/
+
+#ifdef __APPLE__
+#define PREFERENCE_QUITONNOWINDOW   false
+#else
+#define PREFERENCE_QUITONNOWINDOW   true
+#endif
+#define PREFERENCE_BLOCKEXPONENT    8
+#define PREFERENCE_BLOCKEXP_RMAX    7
+#define PREFERENCE_MAXUNDO          -1
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/
 
@@ -18,7 +34,9 @@ namespace
 {
     bqt::mutex pref_mutex;
     
-    bool quit_on_no_windows;
+    bool          quit_on_no_windows;
+    unsigned char block_exponent;
+    long          max_undo_steps;
 }
 
 /******************************************************************************//******************************************************************************/
@@ -29,14 +47,24 @@ namespace bqt
     {
         scoped_lock slock( pref_mutex );
         
-        quit_on_no_windows = false;
+        resetToDefaults();
         
-        ff::write( bqt_out, "Preference file loading not implemented, skipping\n" );
+        ff::write( bqt_out, "Preference file loading not implemented, skipping\n" );    // TODO: implement
     }
+    void resetToDefaults()
+    {
+        scoped_lock slock( pref_mutex );
+        
+        quit_on_no_windows = PREFERENCE_QUITONNOWINDOW;
+        block_exponent     = PREFERENCE_BLOCKEXPONENT;
+        max_undo_steps     = PREFERENCE_MAXUNDO;
+    }
+    
+    // Quit on no windows //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     bool tryQuitOnNoWindows()
     {
-    #ifdef __APPLE__
+    #ifdef __APPLE__                                                            // TODO: Detect all platforms where this is available
         return true;
     #else
         return false;
@@ -52,16 +80,76 @@ namespace bqt
     {
         scoped_lock slock( pref_mutex );
         
-    #ifdef __APPLE__                                                            // TODO: Detect all platforms where this is available
+        if( tryQuitOnNoWindows() )
+            quit_on_no_windows = s;
+        else
+        {
+            ff::write( bqt_out, "Warning: BQTDraw will always exit with no windows open on this platform, ignoring\n" );
+            quit_on_no_windows = true;
+        }
+    }
+    
+    // Block exponent //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    bool tryBlockExponent()
+    {
+        return true;
+    }
+    unsigned char getBlockExponent()
+    {
+        scoped_lock slock( pref_mutex );
         
-        quit_on_no_windows = s;
+        return block_exponent;
+    }
+    void setBlockExponent( unsigned char e )
+    {
+        scoped_lock slock( pref_mutex );
         
-    #else
+        if( e < BLOCKEXPONENT_MIN || e > BLOCKEXPONENT_MAX )
+            throw exception( "Block size exponent must be between " MACROTOSTR( BLOCKEXPONENT_MIN ) " and " MACROTOSTR( BLOCKEXPONENT_MAX ) );
+        else
+        {
+            block_exponent = e;
+            
+            if( block_exponent < PREFERENCE_BLOCKEXP_RMAX )
+                ff::write( bqt_out, "Warning: block exponent below recommended minimum (", PREFERENCE_BLOCKEXP_RMAX, ")\n" );
+        }
         
-        ff::write( bqt_out, "Warning: BQTDraw will always exit with no windows open on this platform, ignoring\n" );
-        quit_on_no_windows = false;
+        if( getDevMode() )
+        {
+            long block_w = pow( 2, block_exponent );
+            ff::write( bqt_out, "Block size set to ", block_w, " x ", block_w, "\n" );
+        }
+    }
+    
+    // Undo/redo steps /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    bool tryMaxUndoSteps()
+    {
+        return true;
+    }
+    long getMaxUndoSteps()
+    {
+        scoped_lock slock( pref_mutex );
         
-    #endif
+        return max_undo_steps;
+    }
+    void setMaxUndoSteps( long s )
+    {
+        scoped_lock slock( pref_mutex );
+        
+        if( s < -1 )
+            throw exception( "Undo steps must be -1 or greater" );
+        else
+            max_undo_steps = s;
+        
+        if( getDevMode() )
+        {
+            if( max_undo_steps < 0 )
+                ff::write( bqt_out, "Undo/redo steps not limited\n" );
+            else
+                ff::write( bqt_out, "Undo/redo limited to ", max_undo_steps, " steps\n" );
+        }
     }
 }
 
