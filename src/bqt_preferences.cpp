@@ -47,13 +47,16 @@ namespace bqt
     {
         scoped_lock slock( pref_mutex );
         
-        resetToDefaults();
+        resetPreferencesToDefaults();
         
         ff::write( bqt_out, "Preference file loading not implemented, skipping\n" );    // TODO: implement
     }
-    void resetToDefaults()
+    void resetPreferencesToDefaults()
     {
         scoped_lock slock( pref_mutex );
+        
+        if( getDevMode() )
+            ff::write( bqt_out, "Setting preferences to defaults\n" );
         
         quit_on_no_windows = PREFERENCE_QUITONNOWINDOW;
         block_exponent     = PREFERENCE_BLOCKEXPONENT;

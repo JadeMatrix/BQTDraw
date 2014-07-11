@@ -22,7 +22,7 @@
 namespace bqt
 {
     void loadPreferencesFile( std::string f );
-    void resetToDefaults();
+    void resetPreferencesToDefaults();
     
     bool tryQuitOnNoWindow();
     bool getQuitOnNoWindows();
