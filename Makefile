@@ -37,7 +37,7 @@ FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = -lpthread -lSDL2
+LINKS = -lpthread -lGL -lSDL2
 FRAMEWORKS = -framework Foundation -framework AppKit
 
 ################################################################################
@@ -102,6 +102,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_launchargs.o \
 				${OBJDIR}/bqt_main.o \
 				${OBJDIR}/bqt_mutex.o \
+				${OBJDIR}/bqt_preferences.o \
 				${OBJDIR}/bqt_semaphore.o \
 				${OBJDIR}/bqt_taskexec.o \
 				${OBJDIR}/bqt_taskqueue.o \

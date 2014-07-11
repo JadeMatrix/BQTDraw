@@ -1,34 +1,31 @@
-#ifndef BQT_GL_HPP
-#define BQT_GL_HPP
+#ifndef BQT_PREFERENCES_HPP
+#define BQT_PREFERENCES_HPP
 
 /* 
- * bqt_gl.hpp
+ * bqt_preferences.hpp
  * 
- * OpenGL headers & utilities
+ * Loading, reading & setting users preferences
+ * 
+ * Each setting comes with three functions:
+ *     try - test if the setting is settable
+ *     get - get the setting value
+ *     set - set the setting value
  * 
  */
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
-#ifdef __APPLE__
-#include <OpenGL/gl.h>
-// #include <OpenGL/glu.h>
-#else
-#include <GL/gl.h>
-// #include <GL/glu.h>
-#endif
+#include <string>
 
 /******************************************************************************//******************************************************************************/
 
-// TODO: Remove these if they're not needed any more:
-#define ZVAL_BACKGROUND -2.0f
-#define ZVAL_NONCOMPSLC -1.0f
-#define ZVAL_COMPDSLICE  0.0f
-#define ZVAL_GUIOVERLAY  1.0f
-
 namespace bqt
 {
+    void loadPreferencesFile( std::string f );
     
+    bool tryQuitOnNoWindow();
+    bool getQuitOnNoWindows();
+    void setQuitOnNoWindows( bool s );
 }
 
 /******************************************************************************//******************************************************************************/
