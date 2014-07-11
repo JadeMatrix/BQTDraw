@@ -110,19 +110,22 @@ namespace bqt
         
         if( e < BLOCKEXPONENT_MIN || e > BLOCKEXPONENT_MAX )
             throw exception( "Block size exponent must be between " MACROTOSTR( BLOCKEXPONENT_MIN ) " and " MACROTOSTR( BLOCKEXPONENT_MAX ) );
-        else
+        
+        if( tryBlockExponent() )
         {
             block_exponent = e;
             
             if( block_exponent < PREFERENCE_BLOCKEXP_RMAX )
                 ff::write( bqt_out, "Warning: block exponent below recommended minimum (", PREFERENCE_BLOCKEXP_RMAX, ")\n" );
+            
+            if( getDevMode() )
+            {
+                long block_w = pow( 2, block_exponent );
+                ff::write( bqt_out, "Block size set to ", block_w, " x ", block_w, "\n" );
+            }
         }
-        
-        if( getDevMode() )
-        {
-            long block_w = pow( 2, block_exponent );
-            ff::write( bqt_out, "Block size set to ", block_w, " x ", block_w, "\n" );
-        }
+        else
+            ff::write( bqt_out, "Could not set block exponent size\n" );
     }
     
     // Undo/redo steps /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,17 +145,22 @@ namespace bqt
         scoped_lock slock( pref_mutex );
         
         if( s < -1 )
-            throw exception( "Undo steps must be -1 or greater" );
-        else
-            max_undo_steps = s;
+            throw exception( "Max undo/redo steps must be -1 or greater" );
         
-        if( getDevMode() )
+        if( tryMaxUndoSteps() )
         {
-            if( max_undo_steps < 0 )
-                ff::write( bqt_out, "Undo/redo steps not limited\n" );
-            else
-                ff::write( bqt_out, "Undo/redo limited to ", max_undo_steps, " steps\n" );
+            max_undo_steps = s;
+            
+            if( getDevMode() )
+            {
+                if( max_undo_steps < 0 )
+                    ff::write( bqt_out, "Max undo/redo steps not limited\n" );
+                else
+                    ff::write( bqt_out, "Max undo/redo limited to ", max_undo_steps, " steps\n" );
+            }
         }
+        else
+            ff::write( bqt_out, "Could not set max undo/redo steps\n" );
     }
 }
 
