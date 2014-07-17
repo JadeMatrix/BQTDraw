@@ -6,14 +6,16 @@
  * 
  * Contains bqt::condition, a class definition for manipulating & managing
  * conditions as objects.  Conditions need private access to mutices to access
- * the internal pthreads data, so bqt::condition is marked as a friend class in
+ * the internal platform data, so bqt::condition is marked as a friend class in
  * bqt::mutex.
  * 
  */
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
+#include "bqt_platform.h"
 #include "bqt_threadutil.hpp"
+
 #include "bqt_mutex.hpp"
 
 /******************************************************************************//******************************************************************************/
@@ -23,7 +25,7 @@ namespace bqt
     class condition
     {
     protected:
-        pthread_cond_t pt_cond;
+        bqt_platform_condition_t platform_condition;
     public:
         condition();
         ~condition();

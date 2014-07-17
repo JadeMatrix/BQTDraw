@@ -6,7 +6,7 @@
  * 
  * Contains bqt::mutex, a class definition for manipulating & managing mutices
  * as objects.  Conditions need private access to mutices to access the internal
- * pthreads data, so bqt::condition is marked as a friend class in bqt::mutex.
+ * platform data, so bqt::condition is marked as a friend class in bqt::mutex.
  * Also contains bqt::scoped_lock, a superior way to use mutices compared to
  * lock()/unlock() blocks.  It is safe to wait a condition on a scope-locked
  * mutex.
@@ -15,6 +15,7 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
+#include "bqt_platform.h"
 #include "bqt_threadutil.hpp"
 
 /******************************************************************************//******************************************************************************/
@@ -25,8 +26,7 @@ namespace bqt
     {
         friend class condition;
     protected:
-        pthread_mutex_t pt_mutex;
-        pthread_mutexattr_t pt_attr;
+        bqt_platform_mutex_t platform_mutex;
     public:
         mutex();
         ~mutex();

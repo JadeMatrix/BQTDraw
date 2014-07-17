@@ -5,16 +5,11 @@
  * bqt_threadutil.hpp
  * 
  * Utilities file for concurrency wrappers
- * Currently using pthreads
  * 
  * Contains all the recognized thread exit codes, both as exit_code's and
  * definitions sof main() & switches can use the values.
  * 
  */
-
-/* INCLUDES *******************************************************************//******************************************************************************/
-
-#include <pthread.h>
 
 /******************************************************************************//******************************************************************************/
 

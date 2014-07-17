@@ -15,17 +15,20 @@
 
 namespace bqt
 {
-    void thread::createPThread( thread_func function, void* data )
+    #if defined PLATFORM_XWS_GNUPOSIX | defined PLATFORM_MACOSX
+    
+    void thread::createPlatformThread( thread_func function, void* data )
     {
         if( has_thread )
-            throw bqt::exception( "bqt::thread::createPThread(): Thread already running" );
+            throw bqt::exception( "thread::createPlatformThread(): Thread already running" );
         if( function == NULL )
-            throw bqt::exception( "bqt::thread::createPThread(): function is NULL" );
+            throw bqt::exception( "thread::createPlatformThread(): function is NULL" );
         
-        pthread_attr_init( &pt_attr );
-        pthread_attr_setdetachstate( &pt_attr, PTHREAD_CREATE_JOINABLE );       // Create a 'joinable' attribute for the thread
+        pthread_attr_init( &platform_thread.pt_attr );
+        pthread_attr_setdetachstate( &platform_thread.pt_attr,
+                                     PTHREAD_CREATE_JOINABLE );                 // Create a 'joinable' attribute for the thread
         
-        if( pthread_create( &pt_thread, &pt_attr, function, data ) )
+        if( pthread_create( &platform_thread.pt_thread, &platform_thread.pt_attr, function, data ) )
             has_thread = false;
         else
             has_thread = true;
@@ -34,7 +37,7 @@ namespace bqt
     void thread::kill()
     {
         if( has_thread )
-            pthread_cancel( pt_thread );
+            pthread_cancel( platform_thread.pt_thread );
     }
     
     thread::thread()
@@ -81,25 +84,25 @@ namespace bqt
     
     bool thread::start()
     {
-        createPThread( function, data );
+        createPlatformThread( function, data );
         
         return has_thread;
     }
     bool thread::start( thread_func function )
     {
-        createPThread( function, data );
+        createPlatformThread( function, data );
         
         return has_thread;
     }
     bool thread::start( void* data )
     {
-        createPThread( function, data );
+        createPlatformThread( function, data );
         
         return has_thread;
     }
     bool thread::start( thread_func function, void* data )
     {
-        createPThread( function, data );
+        createPlatformThread( function, data );
         
         return has_thread;
     }
@@ -108,11 +111,17 @@ namespace bqt
     {
         exit_code return_value;
         
-        pthread_join( pt_thread, &return_value );
+        pthread_join( platform_thread.pt_thread, &return_value );
         has_thread = false;
         
         return return_value;
     }
+    
+    #else
+    
+    #error "Threads not implemented on non-POSIX platforms"
+    
+    #endif
 }
 
 

@@ -37,8 +37,9 @@ FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = -lpthread -lGL -lSDL2
+LINKS = -lGL
 FRAMEWORKS = -framework Foundation -framework AppKit
+DEFINES = -DDEBUG -DPLATFORM_XWS_GNUPOSIX
 
 ################################################################################
 
@@ -76,8 +77,7 @@ osx: build_osx
 	echo ${PKGINFOSTRING} > "${MAKEDIR}/${APPNAME}/Contents/PkgInfo"
 	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/${PROJNAME}_app.icns"
 
-# linux: build_linux
-linux: build_sdl2
+linux: build_linux
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Linux"
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Resources"
 	cp "${RESOURCEDIR}/install_linux.sh" "${MAKEDIR}/${PROJNAME}/install_linux.sh"
@@ -116,9 +116,11 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 				${OBJDIR}/cocoa_main.o
 
-LINUX_OBJECTS =	${OBJDIR}/unix_main.o
+# LINUX_OBJECTS =	${OBJDIR}/unix_main.o
 
 SDL2_OBJECTS =	${OBJDIR}/sdl2_main.o
+
+LINUX_OBJECTS = ${OBJDIR}/x_main.o
 
 # FastFormat is statically linked due to the non-standard build methods the
 # project uses.  Until it is updated to use Autotools it should remain statical-
@@ -139,7 +141,7 @@ FF_OBJECTS =	${FFOBJDIR}/core.api.o \
 build_sdl2: ${CORE_OBJECTS} ${SDL2_OBJECTS}
 	make fastformat
 	mkdir -p ${BUILDDIR}
-	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $? ${FF_OBJECTS}
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} -lSDL2 $? ${FF_OBJECTS}
 
 build_osx: ${CORE_OBJECTS} ${OSX_OBJECTS}
 	make fastformat
@@ -149,7 +151,7 @@ build_osx: ${CORE_OBJECTS} ${OSX_OBJECTS}
 build_linux: ${CORE_OBJECTS} ${LINUX_OBJECTS}
 	make fastformat
 	mkdir -p ${BUILDDIR}
-	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} $? ${FF_OBJECTS}
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} -lpthread -lX11 -lXext $? ${FF_OBJECTS}
 
 fastformat:
 	cd ${FFOBJDIR}; make build.libs.core
@@ -158,19 +160,23 @@ fastformat:
 
 ${OBJDIR}/sdl2_%.o: ${SOURCEDIR}/sdl2_%.cpp
 	mkdir -p ${OBJDIR}
-	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/sdl2_$*.o
+	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/sdl2_$*.o
 
 ${OBJDIR}/unix_%.o: ${SOURCEDIR}/unix_%.cpp
 	mkdir -p ${OBJDIR}
-	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/unix_$*.o
+	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/unix_$*.o
 
 ${OBJDIR}/cocoa_%.o: ${SOURCEDIR}/cocoa_%.m
 	mkdir -p ${OBJDIR}
-	${OBJCC} -c ${INCLUDE} $? -o ${OBJDIR}/cocoa_$*.o
+	${OBJCC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/cocoa_$*.o
 
 ${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
 	mkdir -p ${OBJDIR}
-	${CPPC} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.o
+	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.o
+
+${OBJDIR}/x_%.o: ${SOURCEDIR}/x_%.cpp
+	mkdir -p ${OBJDIR}
+	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/x_$*.o
 
 ################################################################################
 

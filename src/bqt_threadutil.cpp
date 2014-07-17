@@ -7,10 +7,16 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
+#include "bqt_platform.h"
+
 #include "bqt_threadutil.hpp"
 
+#if defined PLATFORM_XWS_GNUPOSIX
 #include <unistd.h>
 #include <stdint.h>
+#endif
+
+#include "bqt_exception.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -18,7 +24,12 @@ namespace bqt
 {
     long getSystemCoreCount()
     {
+        #if defined PLATFORM_XWS_GNUPOSIX
         return sysconf( _SC_NPROCESSORS_ONLN );
+        #else
+        // TODO: implement others
+        throw exception( "Could not get CPU core count" );
+        #endif
     }
     
     const char* exc2str( exit_code ec )

@@ -26,7 +26,7 @@ namespace bqt
         scoped_lock s_lock( s_mutex );
         
         if( count > start )
-            throw exception( "bqt::semaphore::acquire(): Attempt to acquire higher count than possibly available" );
+            throw exception( "semaphore::acquire(): Attempt to acquire higher count than possibly available" );
         else
             while( count > 0 )
             {

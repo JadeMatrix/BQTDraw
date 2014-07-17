@@ -11,6 +11,7 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
+#include "bqt_platform.h"
 #include "bqt_threadutil.hpp"
 
 /******************************************************************************//******************************************************************************/
@@ -20,13 +21,12 @@ namespace bqt
     class thread
     {
     protected:
-        pthread_t pt_thread;
-        pthread_attr_t pt_attr;
+        bqt_platform_thread_t platform_thread;
         bool has_thread;
         thread_func function;
         void* data;
         
-        void createPThread( thread_func function, void* data );
+        void createPlatformThread( thread_func function, void* data );
         
         void kill();
     public:
