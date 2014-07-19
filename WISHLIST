@@ -1,0 +1,3 @@
+-   % fill for blocks (ie how many dots in a given channel are filled vs empty)
+    Expose as API: useful for example for a plugin that calculates the ink
+    coverage for the canvas (option to include/exclude sketches)
