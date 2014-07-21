@@ -151,7 +151,7 @@ build_osx: ${CORE_OBJECTS} ${OSX_OBJECTS}
 build_linux: ${CORE_OBJECTS} ${LINUX_OBJECTS}
 	make fastformat
 	mkdir -p ${BUILDDIR}
-	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} -lpthread -lX11 -lXext $? ${FF_OBJECTS}
+	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} -lpthread -lX11 -lXext -lXi $? ${FF_OBJECTS}
 
 fastformat:
 	cd ${FFOBJDIR}; make build.libs.core
