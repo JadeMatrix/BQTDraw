@@ -31,23 +31,27 @@ namespace
 namespace bqt
 {
     raw allocBitmapSpace( img_mode* mode,
-                          unsigned char exponent,
                           raw original )
     {
+        unsigned char exponent = getBlockExponent();
+        
         if( mode == NULL || exponent < BLOCKEXPONENT_MIN || exponent > BLOCKEXPONENT_MAX )
             throw exception( "allocBitmapSpace(): Invalid parameters" );
         
-        if( mode -> channels < 1 || mode -> depth < 1 )
+        if( mode -> channel_count < 1 || mode -> depth < 1 )
             throw exception( "allocBitmapSpace(): Invalid mode" );
         
-        double bytes_d = ( double )( mode -> channels * mode -> depth ) / 8.0;
+        double bytes_d = ( double )( mode -> channel_count * mode -> depth ) / 8.0;
         
         if( bytes_d > ( pow( 2, sizeof( unsigned int ) ) - 1 ) )
             throw exception( "allocBitmapSpace(): Required space too large" );
         
         unsigned int bytes_i = ( unsigned int )ceil( bytes_d );
         
-        unsigned char* data = new unsigned char[ bytes_i ];
+        raw data = new unsigned char[ bytes_i ];
+        
+        if( data == NULL )
+            throw exception( "allocBitmapSpace(): Out of memory" );
         
         if( original != NULL )
         {
@@ -94,6 +98,66 @@ namespace bqt
             delete pack_spaces.front();
             pack_spaces.pop();
         }
+    }
+    
+    raw convertRawPixels( raw source, raw target, img_mode& from, img_mode& to )
+    {
+        // if( from.depth > 8 * sizeof( long ) || from.depth < 1 )
+        //     throw exception( "convertRawPixels(): Source mode out of acceptable range" );
+        // if( to.depth > 8 * sizeof( long ) || to.depth < 1 )
+        //     throw exception( "convertRawPixels(): Target mode out of acceptable range" );
+        
+        // if( source == NULL )
+        //     throw exception( "convertRawPixels(): Source is NULL" );
+        
+        // unsigned long from_max = exp( 2, from.depth ) - 1;                      // Max value per channel for from
+        // unsigned long   to_max = exp( 2,   to.depth ) - 1;                      // Max value per channel for to
+        
+        // if( target == NULL )
+        //     raw = allocBitmapSpace( &to, NULL );                                // Allocate new space if needed; will throw exception on fail
+        
+        // unsigned long buffer = 0x00;
+        // unsigned long source_bit_count = from.depth * from.channel_count;
+        // raw source_iter = source;
+        
+        // // to_value = ( unsigned long )round( ( ( double )from_value / ( double )from_fill ) * ( double )to_fill )
+        // // to_value = from_value << to_value - from_value;
+        
+        // unsigned long from_mask = ~( -1 >> from.depth );
+        // unsigned char* from_mask_mask = ( unsigned char* )&from_mask;
+        // int from_mask_mask_offset = 0;
+        
+        // for( unsigned long i = 0; i < source_bit_count; )
+        // {
+        //     buffer |= *source_iter | from_mask_mask[ from_mask_mask_offset ];
+            
+        //     from_mask_mask_offset = ( from_mask_mask_offset + 1 ) % sizeof( long );
+            
+        //     if( from_mask_mask_offset == 0 )                                    // We looped around, so we're at the trailing end of the mask, so...
+        //     {
+        //         buffer >>= from.depth % 8;                                      // ... shift the buffer backwards to cover that
+                
+        //         for( int j = 0; j < sizeof( double ); j++ )                     // The buffer is ready now, so begin writing it
+        //         {
+        //             #if defined CONVERT_RAW_SCALE
+                    
+                    
+                    
+        //             #elif defined CONVERT_RAW_
+        //         }
+                
+        //         buffer = 0x00;                                                  // Clear the buffer
+                
+        //         i += from.depth % 8;
+        //     }
+        //     else
+        //         i += 8;
+        // }
+        
+        throw exception( "convertRawPixels(): Not implemented" );
+        // TODO: implement
+        
+        return NULL;
     }
 }
 

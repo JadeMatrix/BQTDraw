@@ -1,3 +1,17 @@
 -   % fill for blocks (ie how many dots in a given channel are filled vs empty)
     Expose as API: useful for example for a plugin that calculates the ink
     coverage for the canvas (option to include/exclude sketches)
+
+-   new document from clipboard
+    new layer from clipboard
+
+-   opening existing images (JPG/TIFF/PNG/etc.) detects image mode
+
+-   ability to specify colors for any given channels, ie:
+    CMYK:
+        C = 1.0 C, 0.0 M, 0.0 Y, 0.0 K
+        etc.
+    XYZ:
+        X = 0.5 R, 1.0 B, 0.1 G
+        Y = 1.0 R, 0.9 B, 1.0 G
+        Z = 0.7 R, 0.3 B, 0.9 G

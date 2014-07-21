@@ -96,6 +96,8 @@ namespace bqt
     
     bool tryBlockExponent()
     {
+        #warning "tryBlockExponent() does not check if a file is open"
+        // TODO: if a file is open return false, otherwise return true
         return true;
     }
     unsigned char getBlockExponent()
