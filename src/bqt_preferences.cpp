@@ -27,6 +27,7 @@
 #define PREFERENCE_BLOCKEXPONENT    8
 #define PREFERENCE_BLOCKEXP_RMAX    7
 #define PREFERENCE_MAXUNDO          -1
+#define PREFERENCE_CLICKDISTMM      3.0f
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/
 
@@ -37,6 +38,7 @@ namespace
     bool          quit_on_no_windows;
     unsigned char block_exponent;
     long          max_undo_steps;
+    float         click_dist_mm;
 }
 
 /******************************************************************************//******************************************************************************/
@@ -61,6 +63,7 @@ namespace bqt
         quit_on_no_windows = PREFERENCE_QUITONNOWINDOW;
         block_exponent     = PREFERENCE_BLOCKEXPONENT;
         max_undo_steps     = PREFERENCE_MAXUNDO;
+        click_dist_mm      = PREFERENCE_CLICKDISTMM;
     }
     
     // Quit on no windows //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,6 +166,28 @@ namespace bqt
         }
         else
             ff::write( bqt_out, "Could not set max undo/redo steps\n" );
+    }
+    
+    // Click distance //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    bool tryClickDistance()
+    {
+        return true;
+    }
+    float getClickDistance()
+    {
+        scoped_lock slock( pref_mutex );
+        
+        return click_dist_mm;
+    }
+    void setClickDistance( float d )
+    {
+        scoped_lock slock( pref_mutex );
+        
+        if( tryClickDistance() )
+            click_dist_mm = d;
+        else
+            ff::write( bqt_out, "Could not set click distance\n" );
     }
 }
 

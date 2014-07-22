@@ -35,6 +35,10 @@ namespace bqt
     bool tryMaxUndoSteps();
     long getMaxUndoSteps();                                                     // Get the max number of undos; -1 for unlimited
     void setMaxUndoSteps( long s );
+    
+    bool  tryClickDistance();                                                   // Radial distance in mm within which a stroke is considered a click vs drag.
+    float getClickDistance();                                                   // Also, distance between consecutive clicks that is considered a double/triple/
+    void  setClickDistance( float d );                                          // etc. click.
 }
 
 /******************************************************************************//******************************************************************************/
