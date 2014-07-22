@@ -98,6 +98,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_events.o \
 				${OBJDIR}/bqt_exception.o \
 				${OBJDIR}/bqt_fileformat.o \
+				${OBJDIR}/bqt_gl.o \
 				${OBJDIR}/bqt_imagemode.o \
 				${OBJDIR}/bqt_launchargs.o \
 				${OBJDIR}/bqt_main.o \
