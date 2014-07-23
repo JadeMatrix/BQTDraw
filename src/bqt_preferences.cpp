@@ -11,9 +11,9 @@
 
 #include <cmath>
 
+#include "bqt_imagemode.hpp"
 #include "bqt_mutex.hpp"
 #include "bqt_log.hpp"
-#include "bqt_imagemode.hpp"
 #include "bqt_exception.hpp"
 #include "bqt_launchargs.hpp"
 

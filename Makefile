@@ -37,7 +37,7 @@ FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = -lGL
+LINKS = -lGL -lGLEW
 FRAMEWORKS = -framework Foundation -framework AppKit
 DEFINES = -DDEBUG -DPLATFORM_XWS_GNUPOSIX
 
