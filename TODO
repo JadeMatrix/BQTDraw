@@ -4,12 +4,24 @@ Use Autotools
 
 use Objective-C++ for Cocoa wrappers (?)
 
-use references as members where applicable
+use references instead of pointers where applicable
+    - bqt::becomeTaskThread()
 
 decide on a name, change name in code, improve the icon
 
 implement bqt internal storage
 implement bqt file parsing
+
+move "#include <ctime>" from bqt_timestamp.hpp to bqt_timestamp.cpp
+remove sdl2_main.cpp
+change undo/redo return types from int to enum
+use size_t where appropriate
+    - getTaskThreadCount()
+    - getTaskQueueSize()
+use custom GLEW include guards for more freedom when including bqt_gl.hpp
+replace assignment for initialization for all references
+    - StartBQTDraw_task : get initial file list
+global render lock that waits until first context is created (GLEW init problems)
 
 launch arg for recording history 0 none 1 metadata 2 full history
 
