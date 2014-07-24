@@ -2,16 +2,22 @@
     - Current
 
 0.2
+    - Canvas drawing
     - Bitmap storage in RAM
-    - BQT file format support
+    - RAM/GPU synching
 
 0.3
-    - RAM/GPU synching
-    - Canvas drawing
+    - GUI drawing
+    - BQT file format support
     ? Child tasks
 
 0.4
-    - GUI drawing
+    - Scriptable GUI
+    - Python plugin API
+
+0.5
+    - Full useful GUI
+    - Basic plugins
 
 1.0
     - Proper name
@@ -29,7 +35,6 @@
 3.0
     - Arbitrary color channels
     - Plugins for brushes via shader programs
-    - General scripting with Python
 
 4.0
     - Possible vector brush support
