@@ -7,8 +7,6 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
-#include "bqt_platform.h"
-
 #include "bqt_threadutil.hpp"
 
 #if defined PLATFORM_XWS_GNUPOSIX
