@@ -13,6 +13,7 @@
 #include "bqt_gl.hpp"
 #include "bqt_log.hpp"
 #include "bqt_launchargs.hpp"
+#include "bqt_platform.h"
 
 /******************************************************************************//******************************************************************************/
 
@@ -119,6 +120,11 @@ namespace bqt
             break;
         case DROP:
         case KEYCOMMAND:
+            if( e.key.key == KEY_Q & e.key.cmd )
+            {
+                setQuitFlag();
+                break;
+            }
         case COMMAND:
             pass_event = true;
             break;
@@ -199,7 +205,11 @@ namespace bqt
             }
             
             if( acceptor == NULL && getDevMode() )
-                ff::write( bqt_out, "Warning: event trickled down but not accepted\n" );
+                ff::write( bqt_out,
+                           "Warning: event trickled down but not accepted\n",
+                           " - Event: ",
+                           wevent2str( e ),
+                           "\n" );
         }
     }
     
