@@ -4,50 +4,73 @@
 /* 
  * bqt_layout.hpp
  * 
- * Inside-window layout handling
+ * GUI layout handling
+ * 
+ * Even though GUIs are by definition locked to a window, layout and
+ * layout_element are thread-safe for any future needs.
  * 
  */
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
 #include <vector>
+#include <map>
 
 #include "bqt_canvas.hpp"
 #include "bqt_windowevent.hpp"
+#include "bqt_mutex.hpp"
 
 /******************************************************************************//******************************************************************************/
 
 namespace bqt
 {
-    class canvas_layout
+    class layout_element
     {
     protected:
-        struct pane
-        {
-            enum
-            {
-                EMPTY,
-                CANVAS,
-                PANES
-            } type;
-            std::vector< std::pair< pane, float > > children;                   // Should be empty if contents non-NULL
-            canvas* contents;
-        };
+        mutex element_mutex;
         
-        pane root;
+        int position[ 2 ];
+        unsigned int dimensions[ 2 ];
+        
+        bool event_fallthrough;                                                 // Allow events to fall through if not accepted; true by default
     public:
-        canvas_layout();
+        layout_element( int x,
+                        int y,
+                        unsigned int w,
+                        unsigned int h );
         
-        void acceptEvent( window_event& e );
+        std::pair< unsigned int, unsigned int > getDimensions();
+        void setDimensions( unsigned int w, unsigned int h );
         
-        void draw();
+        std::pair< int, int > getPosition();
+        void setPosition( int x, int y );
+        
+        bool getEventFallthrough();
+        void setEventFallthrough( bool f );
+        
+        virtual layout_element* acceptEvent( window_event&e ) = 0;              // If the event was accepted, returns a pointer to the layout_element that
+                                                                                // accepted, else returns NULL.  If event_fallthrough is false should always
+                                                                                // returns a pointer to a layout_element, even it it's this.
+        
+        virtual void draw() = 0;
     };
     
-    class gui_layout
+    class layout
     {
     protected:
-        canvas_layout canvasses;
+        mutex layout_mutex;
+        
+        unsigned int dimensions[ 2 ];
+        
+        std::vector< layout_element* > elements;
+        
+        std::map< bqt_platform_idevid_t, layout_element* > input_assoc;
     public:
+        layout( unsigned int w, unsigned int h );
+        
+        std::pair< unsigned int, unsigned int > getDimensions();
+        void setDimensions( unsigned int w, unsigned int h );
+        
         void acceptEvent( window_event& e );
         
         void draw();

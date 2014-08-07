@@ -103,6 +103,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_keycode.o \
 				${OBJDIR}/bqt_launchargs.o \
 				${OBJDIR}/bqt_layout.o \
+				${OBJDIR}/bqt_layout_canvas.o \
 				${OBJDIR}/bqt_main.o \
 				${OBJDIR}/bqt_mutex.o \
 				${OBJDIR}/bqt_preferences.o \
