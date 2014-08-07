@@ -120,7 +120,7 @@ namespace bqt
             break;
         case DROP:
         case KEYCOMMAND:
-            if( e.key.key == KEY_Q & e.key.cmd )
+            if( e.key.key == KEY_Q && e.key.cmd )
             {
                 setQuitFlag();
                 break;
