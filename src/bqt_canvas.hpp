@@ -26,6 +26,12 @@ namespace bqt
     {
     protected:
     public:
+        void draw( unsigned int view_w,
+                   unsigned int view_h,
+                   float x_off,
+                   float y_off,
+                   float zoom );
+        
         int undo();
         int redo();
         int undo( timestamp stamp );
