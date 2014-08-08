@@ -11,6 +11,8 @@
  * lock()/unlock() blocks.  It is safe to wait a condition on a scope-locked
  * mutex.
  * 
+ * Note: bqt::mutex allows recursive locks.
+ * 
  */
 
 /* INCLUDES *******************************************************************//******************************************************************************/

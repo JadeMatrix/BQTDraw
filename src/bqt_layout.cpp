@@ -32,6 +32,8 @@ namespace bqt
         dimensions[ 1 ] = w;
         
         event_fallthrough = true;
+        
+        shape_flag = true;
     }
     
     std::pair< unsigned int, unsigned int > layout_element::getDimensions()
@@ -46,6 +48,8 @@ namespace bqt
         
         dimensions[ 0 ] = w;
         dimensions[ 1 ] = w;
+        
+        shape_flag = true;
     }
     
     std::pair< int, int > layout_element::getPosition()
@@ -60,6 +64,8 @@ namespace bqt
         
         position[ 0 ] = x;
         position[ 1 ] = y;
+        
+        shape_flag = true;
     }
     
     bool layout_element::getEventFallthrough()
@@ -73,6 +79,13 @@ namespace bqt
         scoped_lock slock( element_mutex );
         
         event_fallthrough = f;
+    }
+    
+    bool layout_element::getShapeChange()
+    {
+        scoped_lock slock( element_mutex );
+        
+        return shape_flag;
     }
     
     /* LAYOUT *****************************************************************//******************************************************************************/
