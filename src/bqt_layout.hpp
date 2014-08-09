@@ -6,8 +6,8 @@
  * 
  * GUI layout handling
  * 
- * Even though GUIs are by definition locked to a window, layout and
- * layout_element are thread-safe for any future needs.
+ * Even though GUIs are by definition locked to a window, layout is thread-safe
+ * for any future needs.
  * 
  */
 
@@ -16,7 +16,6 @@
 #include <vector>
 #include <map>
 
-#include "bqt_canvas.hpp"
 #include "bqt_windowevent.hpp"
 #include "bqt_mutex.hpp"
 
@@ -24,42 +23,7 @@
 
 namespace bqt
 {
-    class layout_element
-    {
-    protected:
-        mutex element_mutex;
-        
-        int position[ 2 ];
-        unsigned int dimensions[ 2 ];
-        
-        bool event_fallthrough;                                                 // Allow events to fall through if not accepted; true by default
-        
-        bool shape_flag;
-    public:
-        layout_element( int x,
-                        int y,
-                        unsigned int w,
-                        unsigned int h );
-        
-        std::pair< unsigned int, unsigned int > getDimensions();
-        void setDimensions( unsigned int w, unsigned int h );
-        
-        virtual std::pair< unsigned int, unsigned int > getMinDimensions() = 0;
-        
-        std::pair< int, int > getPosition();
-        void setPosition( int x, int y );
-        
-        bool getEventFallthrough();
-        void setEventFallthrough( bool f );
-        
-        bool getShapeChange();                                                  // Returns true if dimensions or position has changed since last draw
-        
-        virtual layout_element* acceptEvent( window_event&e ) = 0;              // If the event was accepted, returns a pointer to the layout_element that
-                                                                                // accepted, else returns NULL.  If event_fallthrough is false should always
-                                                                                // returns a pointer to a layout_element, even it it's this.
-        
-        virtual void draw() = 0;
-    };
+    class layout_element;                                                       // Defined int gui/bqt_layout_element.hpp
     
     class layout
     {
@@ -76,6 +40,10 @@ namespace bqt
         
         std::pair< unsigned int, unsigned int > getDimensions();
         void setDimensions( unsigned int w, unsigned int h );
+        
+        void associateDevice( bqt_platform_idevid_t dev_id,
+                              layout_element* element );                        // Begins sending input events from the device directly to the element without
+                                                                                // passing through the element tree; deassociates if element is NULL.
         
         void acceptEvent( window_event& e );
         

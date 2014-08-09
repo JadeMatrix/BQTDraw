@@ -103,7 +103,6 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_keycode.o \
 				${OBJDIR}/bqt_launchargs.o \
 				${OBJDIR}/bqt_layout.o \
-				${OBJDIR}/bqt_layout_canvas.o \
 				${OBJDIR}/bqt_main.o \
 				${OBJDIR}/bqt_mutex.o \
 				${OBJDIR}/bqt_preferences.o \
@@ -116,14 +115,11 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_trackable.o \
 				${OBJDIR}/bqt_window.o \
 				${OBJDIR}/bqt_windowevent.o \
-				${OBJDIR}/bqt_windowmanagement.o
+				${OBJDIR}/bqt_windowmanagement.o \
+				${OBJDIR}/gui.bqt_layout_element.o
 
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 				${OBJDIR}/cocoa_main.o
-
-# LINUX_OBJECTS =	${OBJDIR}/unix_main.o
-
-SDL2_OBJECTS =	${OBJDIR}/sdl2_main.o
 
 LINUX_OBJECTS = ${OBJDIR}/x_main.o
 
@@ -143,11 +139,6 @@ FF_OBJECTS =	${FFOBJDIR}/core.api.o \
 
 # ${OBJDIR}/bqt_.o
 
-build_sdl2: ${CORE_OBJECTS} ${SDL2_OBJECTS}
-	make fastformat
-	mkdir -p ${BUILDDIR}
-	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} -lSDL2 $? ${FF_OBJECTS}
-
 build_osx: ${CORE_OBJECTS} ${OSX_OBJECTS}
 	make fastformat
 	mkdir -p ${BUILDDIR}
@@ -163,10 +154,6 @@ fastformat:
 
 ################################################################################
 
-${OBJDIR}/sdl2_%.o: ${SOURCEDIR}/sdl2_%.cpp
-	mkdir -p ${OBJDIR}
-	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/sdl2_$*.o
-
 ${OBJDIR}/unix_%.o: ${SOURCEDIR}/unix_%.cpp
 	mkdir -p ${OBJDIR}
 	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/unix_$*.o
@@ -178,6 +165,10 @@ ${OBJDIR}/cocoa_%.o: ${SOURCEDIR}/cocoa_%.m
 ${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
 	mkdir -p ${OBJDIR}
 	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.o
+
+${OBJDIR}/gui.bqt_%.o: ${SOURCEDIR}/gui/bqt_%.cpp
+	mkdir -p ${OBJDIR}
+	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/gui.bqt_$*.o
 
 ${OBJDIR}/x_%.o: ${SOURCEDIR}/x_%.cpp
 	mkdir -p ${OBJDIR}

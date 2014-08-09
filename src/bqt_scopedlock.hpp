@@ -14,8 +14,8 @@
 
 #include "bqt_mutex.hpp"
 #include "bqt_semaphore.hpp"
-// #include "bqt_rwlock.hpp"
-// #include "bqt_spinlock.hpp"
+#include "bqt_rwlock.hpp"
+#include "bqt_spinlock.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -62,6 +62,31 @@ namespace bqt
                 sls.release( count );
             else
                 sls.releaseAll();
+        }
+    };
+    
+    #define RW_READ  false
+    #define RW_WRITE true
+    
+    template<> class scoped_lock< rwlock >
+    {
+    private:
+        rwlock& slrwl;
+        bool method;
+    public:
+        scoped_lock( rwlock& r, bool m = RW_READ ) : slrwl( r ), method( m )
+        {
+            if( method )
+                slrwl.lock_write();
+            else
+                slrwl.lock_read();
+        }
+        ~scoped_lock()
+        {
+            if( method )
+                slrwl.unlock_write();
+            else
+                slrwl.unlock_read();
         }
     };
 }
