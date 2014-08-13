@@ -114,7 +114,7 @@ namespace bqt
     {
         bool pass_event = false;
         
-        ff::write( bqt_out, "Got event: ", wevent2str( e ) );
+        ff::write( bqt_out, "Got event: ", wevent2str( e ), "\n" );
         
         switch( e.type )
         {

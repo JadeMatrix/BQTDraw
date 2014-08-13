@@ -37,7 +37,7 @@ FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = -lGL -lGLEW
+LINKS = -lGL -lGLEW -lpng
 FRAMEWORKS = -framework Foundation -framework AppKit
 DEFINES = -DDEBUG -DPLATFORM_XWS_GNUPOSIX
 
@@ -105,6 +105,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_layout.o \
 				${OBJDIR}/bqt_main.o \
 				${OBJDIR}/bqt_mutex.o \
+				${OBJDIR}/bqt_png.o \
 				${OBJDIR}/bqt_preferences.o \
 				${OBJDIR}/bqt_semaphore.o \
 				${OBJDIR}/bqt_taskexec.o \
@@ -116,6 +117,8 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_window.o \
 				${OBJDIR}/bqt_windowevent.o \
 				${OBJDIR}/bqt_windowmanagement.o \
+				${OBJDIR}/gui.bqt_gui_button.o \
+				${OBJDIR}/gui.bqt_gui_resource.o \
 				${OBJDIR}/gui.bqt_layout_element.o
 
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
