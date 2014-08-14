@@ -76,6 +76,7 @@ osx: build_osx
 	cp "${BUILDDIR}/${PROJNAME}" "${MAKEDIR}/${APPNAME}/Contents/MacOS/${PROJNAME}"
 	echo ${PKGINFOSTRING} > "${MAKEDIR}/${APPNAME}/Contents/PkgInfo"
 	cp "${RESOURCEDIR}/${PROJNAME}_app.icns" "${MAKEDIR}/${APPNAME}/Contents/Resources/${PROJNAME}_app.icns"
+	cp "${RESOURCEDIR}/gui_resources.png" "${MAKEDIR}/${APPNAME}/Contents/Resources/gui_resources.png"
 
 linux: build_linux
 	mkdir -p "${MAKEDIR}/${PROJNAME}/Linux"
@@ -87,6 +88,7 @@ linux: build_linux
 	cp "${RESOURCEDIR}/${PROJNAME}_app_128p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_128p.png"
 	cp "${RESOURCEDIR}/${PROJNAME}_app_256p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_256p.png"
 	cp "${RESOURCEDIR}/${PROJNAME}_app_512p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_512p.png"
+	cp "${RESOURCEDIR}/gui_resources.png" "${MAKEDIR}/${PROJNAME}/Resources/gui_resources.png"
 
 windows:
 	# Not supported yet
@@ -102,7 +104,6 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_imagemode.o \
 				${OBJDIR}/bqt_keycode.o \
 				${OBJDIR}/bqt_launchargs.o \
-				${OBJDIR}/bqt_layout.o \
 				${OBJDIR}/bqt_main.o \
 				${OBJDIR}/bqt_mutex.o \
 				${OBJDIR}/bqt_png.o \
@@ -119,6 +120,8 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_windowmanagement.o \
 				${OBJDIR}/gui.bqt_gui_button.o \
 				${OBJDIR}/gui.bqt_gui_resource.o \
+				${OBJDIR}/gui.bqt_gui_texture.o \
+				${OBJDIR}/gui.bqt_layout.o \
 				${OBJDIR}/gui.bqt_layout_element.o
 
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
