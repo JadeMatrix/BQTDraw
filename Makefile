@@ -117,12 +117,12 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_trackable.o \
 				${OBJDIR}/bqt_window.o \
 				${OBJDIR}/bqt_windowevent.o \
-				${OBJDIR}/bqt_windowmanagement.o \
-				${OBJDIR}/gui.bqt_gui_button.o \
-				${OBJDIR}/gui.bqt_gui_resource.o \
-				${OBJDIR}/gui.bqt_gui_texture.o \
-				${OBJDIR}/gui.bqt_layout.o \
-				${OBJDIR}/gui.bqt_layout_element.o
+				${OBJDIR}/bqt_windowmanagement.o #\
+				# ${OBJDIR}/gui.bqt_gui_button.o \
+				# ${OBJDIR}/gui.bqt_gui_resource.o \
+				# ${OBJDIR}/gui.bqt_gui_texture.o \
+				# ${OBJDIR}/gui.bqt_layout.o \
+				# ${OBJDIR}/gui.bqt_layout_element.o
 
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 				${OBJDIR}/cocoa_main.o
