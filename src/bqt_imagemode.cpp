@@ -69,7 +69,7 @@ namespace bqt
     
     pack_space allocPackSpace()
     {
-        scoped_lock slock( pack_space_mutex );
+        scoped_lock< mutex > slock( pack_space_mutex );
         
         pack_space got;
         
@@ -85,13 +85,13 @@ namespace bqt
     }
     void releasePackSpace( pack_space s )
     {
-        scoped_lock slock( pack_space_mutex );
+        scoped_lock< mutex > slock( pack_space_mutex );
         
         pack_spaces.push( s );
     }
     void cleanPackSpaces()
     {
-        scoped_lock slock( pack_space_mutex );                                  // Thread safe so we can use it for debug, optimization, etc.
+        scoped_lock< mutex > slock( pack_space_mutex );                                  // Thread safe so we can use it for debug, optimization, etc.
         
         while( !pack_spaces.empty() )
         {

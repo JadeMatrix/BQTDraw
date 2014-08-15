@@ -12,7 +12,7 @@
 #include <cmath>
 
 #include "bqt_imagemode.hpp"
-#include "threading/bqt_mutex.hpp"
+#include "threading/bqt_rwlock.hpp"
 #include "bqt_log.hpp"
 #include "bqt_exception.hpp"
 #include "bqt_launchargs.hpp"
@@ -33,7 +33,7 @@
 
 namespace
 {
-    bqt::mutex pref_mutex;
+    bqt::rwlock pref_lock;
     
     bool          quit_on_no_windows;
     unsigned char block_exponent;
@@ -47,7 +47,7 @@ namespace bqt
 {
     void loadPreferencesFile( std::string f )
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
         
         resetPreferencesToDefaults();
         
@@ -55,7 +55,7 @@ namespace bqt
     }
     void resetPreferencesToDefaults()
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
         
         if( getDevMode() )
             ff::write( bqt_out, "Setting preferences to defaults\n" );
@@ -78,13 +78,13 @@ namespace bqt
     }
     bool getQuitOnNoWindows()
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock );
         
         return quit_on_no_windows;
     }
     void setQuitOnNoWindows( bool s )
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
         
         if( tryQuitOnNoWindows() )
             quit_on_no_windows = s;
@@ -105,13 +105,13 @@ namespace bqt
     }
     unsigned char getBlockExponent()
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock );
         
         return block_exponent;
     }
     void setBlockExponent( unsigned char e )
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
         
         if( e < BLOCKEXPONENT_MIN || e > BLOCKEXPONENT_MAX )
             throw exception( "Block size exponent must be between " MACROTOSTR( BLOCKEXPONENT_MIN ) " and " MACROTOSTR( BLOCKEXPONENT_MAX ) );
@@ -141,13 +141,13 @@ namespace bqt
     }
     long getMaxUndoSteps()
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock );
         
         return max_undo_steps;
     }
     void setMaxUndoSteps( long s )
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
         
         if( s < -1 )
             throw exception( "Max undo/redo steps must be -1 or greater" );
@@ -176,13 +176,13 @@ namespace bqt
     }
     float getClickDistance()
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock );
         
         return click_dist_mm;
     }
     void setClickDistance( float d )
     {
-        scoped_lock slock( pref_mutex );
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
         
         if( tryClickDistance() )
             click_dist_mm = d;
