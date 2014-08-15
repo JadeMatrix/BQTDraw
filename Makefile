@@ -96,8 +96,7 @@ windows:
 ################################################################################
 
 # TODO: consider using macro(s)
-CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
-				${OBJDIR}/bqt_events.o \
+CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/bqt_exception.o \
 				${OBJDIR}/bqt_fileformat.o \
 				${OBJDIR}/bqt_gl.o \
@@ -105,19 +104,21 @@ CORE_OBJECTS =	${OBJDIR}/bqt_condition.o \
 				${OBJDIR}/bqt_keycode.o \
 				${OBJDIR}/bqt_launchargs.o \
 				${OBJDIR}/bqt_main.o \
-				${OBJDIR}/bqt_mutex.o \
 				${OBJDIR}/bqt_png.o \
 				${OBJDIR}/bqt_preferences.o \
-				${OBJDIR}/bqt_semaphore.o \
 				${OBJDIR}/bqt_taskexec.o \
 				${OBJDIR}/bqt_taskqueue.o \
-				${OBJDIR}/bqt_threadutil.o \
-				${OBJDIR}/bqt_thread.o \
 				${OBJDIR}/bqt_timestamp.o \
 				${OBJDIR}/bqt_trackable.o \
 				${OBJDIR}/bqt_window.o \
 				${OBJDIR}/bqt_windowevent.o \
-				${OBJDIR}/bqt_windowmanagement.o #\
+				${OBJDIR}/bqt_windowmanagement.o \
+				${OBJDIR}/threading.bqt_condition.o \
+				${OBJDIR}/threading.bqt_mutex.o \
+				${OBJDIR}/threading.bqt_rwlock.o \
+				${OBJDIR}/threading.bqt_semaphore.o \
+				${OBJDIR}/threading.bqt_threadutil.o \
+				${OBJDIR}/threading.bqt_thread.o #\
 				# ${OBJDIR}/gui.bqt_gui_button.o \
 				# ${OBJDIR}/gui.bqt_gui_resource.o \
 				# ${OBJDIR}/gui.bqt_gui_texture.o \
@@ -175,6 +176,10 @@ ${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
 ${OBJDIR}/gui.bqt_%.o: ${SOURCEDIR}/gui/bqt_%.cpp
 	mkdir -p ${OBJDIR}
 	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/gui.bqt_$*.o
+
+${OBJDIR}/threading.bqt_%.o: ${SOURCEDIR}/threading/bqt_%.cpp
+	mkdir -p ${OBJDIR}
+	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/threading.bqt_$*.o
 
 ${OBJDIR}/x_%.o: ${SOURCEDIR}/x_%.cpp
 	mkdir -p ${OBJDIR}

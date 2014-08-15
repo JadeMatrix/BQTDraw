@@ -15,7 +15,7 @@
 #include "bqt_mutex.hpp"
 #include "bqt_semaphore.hpp"
 #include "bqt_rwlock.hpp"
-#include "bqt_spinlock.hpp"
+// #include "bqt_spinlock.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -72,21 +72,17 @@ namespace bqt
     {
     private:
         rwlock& slrwl;
-        bool method;
     public:
-        scoped_lock( rwlock& r, bool m = RW_READ ) : slrwl( r ), method( m )
+        scoped_lock( rwlock& r, bool m = RW_READ ) : slrwl( r )
         {
-            if( method )
+            if( m )
                 slrwl.lock_write();
             else
                 slrwl.lock_read();
         }
         ~scoped_lock()
         {
-            if( method )
-                slrwl.unlock_write();
-            else
-                slrwl.unlock_read();
+            slrwl.unlock();
         }
     };
 }

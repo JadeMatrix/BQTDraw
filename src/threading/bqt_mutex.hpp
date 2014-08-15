@@ -17,6 +17,7 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
+#include "../bqt_platform.h"
 #include "bqt_threadutil.hpp"
 
 /******************************************************************************//******************************************************************************/
@@ -38,7 +39,7 @@ namespace bqt
         bool try_lock() const;                                                  // Returns true if lock was successful, false if it was not.
     };
     
-    class scoped_lock
+    class scoped_lock                                                           // TODO: Replace with scoped_lock<> from bqt_scopedlock.hpp
     {
     private:
         mutex& slm;

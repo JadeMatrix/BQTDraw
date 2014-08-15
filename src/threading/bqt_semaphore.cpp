@@ -9,7 +9,7 @@
 
 #include "bqt_semaphore.hpp"
 
-#include "bqt_exception.hpp"
+#include "../bqt_exception.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -23,7 +23,14 @@ namespace bqt
 
     void semaphore::acquire( unsigned int count )
     {
-        scoped_lock s_lock( s_mutex );
+        try
+        {
+            scoped_lock s_lock( s_mutex );
+        }
+        catch( exception& e )
+        {
+            throw exception( "semaphore::acquire(): " + std::string( e.what() ) );
+        }
         
         if( count > start )
             throw exception( "semaphore::acquire(): Attempt to acquire higher count than possibly available" );
@@ -52,10 +59,17 @@ namespace bqt
 
     void semaphore::release( unsigned int count )
     {
-        scoped_lock s_lock( s_mutex );
+        try
+        {
+            scoped_lock s_lock( s_mutex );
+        }
+        catch( exception& e )
+        {
+            throw exception( "semaphore::release(): " + std::string( e.what() ) );
+        }
         
         if( ( free + count ) > start )
-            throw exception( "bqt::semaphore::release(): Attempt to release more than possibly available" );
+            throw exception( "semaphore::release(): Attempt to release more than possibly available" );
         else
         {
             free += count;
@@ -69,10 +83,17 @@ namespace bqt
 
     void semaphore::increase( unsigned int count )
     {
-        scoped_lock s_lock( s_mutex );
+        try
+        {
+            scoped_lock s_lock( s_mutex );
+        }
+        catch( exception& e )
+        {
+            throw exception( "semaphore::increase(): " + std::string( e.what() ) );
+        }
         
         if( ( start + count ) < start )
-            throw exception( "bqt::semaphore::increase(): Overflow" );
+            throw exception( "semaphore::increase(): Overflow" );
         else
         {
             start += count;

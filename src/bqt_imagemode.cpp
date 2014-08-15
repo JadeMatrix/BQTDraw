@@ -13,7 +13,7 @@
 #include <queue>
 
 #include "bqt_exception.hpp"
-#include "bqt_mutex.hpp"
+#include "threading/bqt_mutex.hpp"
 #include "bqt_preferences.hpp"
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/

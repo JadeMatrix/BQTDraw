@@ -13,7 +13,9 @@
 
 /* INCLUDES *******************************************************************//******************************************************************************/
 
-#include "bqt_platform.h"
+#include <string>
+
+#include "../bqt_platform.h"
 
 /******************************************************************************//******************************************************************************/
 
@@ -35,7 +37,15 @@ namespace bqt
     
     long getSystemCoreCount();
     
-    const char* exc2str( exit_code ec );                                        // "EXit Code 2 (to) STRing"
+    std::string exc2str( exit_code ec );                                        // "EXit Code 2 [to] STRing"
+    
+    #if defined PLATFORM_XWS_GNUPOSIX || defined PLATFORM_MACOSX
+    
+    std::string errc2str( int err );                                            // "unix ERRor Code 2 [to] STRing"
+    
+    #elif defined PLATFORM_WINDOWS
+    
+    #endif
 }
 
 /******************************************************************************//******************************************************************************/

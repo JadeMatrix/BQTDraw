@@ -14,7 +14,7 @@
 #include <stdint.h>
 #endif
 
-#include "bqt_exception.hpp"
+#include "../bqt_exception.hpp"
 
 /******************************************************************************//******************************************************************************/
 
@@ -30,7 +30,7 @@ namespace bqt
         #endif
     }
     
-    const char* exc2str( exit_code ec )
+    std::string exc2str( exit_code ec )
     {
         switch( ( intptr_t )ec )                                                // We know for certain that this is not a real pointer
         {
@@ -45,6 +45,15 @@ namespace bqt
             default:
                 return "n/a";
         }
+    }
+    
+    std::string errc2str( int err )
+    {
+        char buff[ 64 ];
+        
+        strerror_r( err, buff, 64 );
+        
+        return std::string( buff );
     }
 }
 
