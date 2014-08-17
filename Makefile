@@ -119,13 +119,9 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/threading.bqt_semaphore.o \
 				${OBJDIR}/threading.bqt_threadutil.o \
 				${OBJDIR}/threading.bqt_thread.o  \
+				${OBJDIR}/gui.bqt_gui_button.o  \
 				${OBJDIR}/gui.bqt_gui_element.o  \
-				${OBJDIR}/gui.bqt_gui_resource.o #\
-				# ${OBJDIR}/gui.bqt_gui_button.o \
-				# ${OBJDIR}/gui.bqt_gui_resource.o \
-				# ${OBJDIR}/gui.bqt_gui_texture.o \
-				# ${OBJDIR}/gui.bqt_layout.o \
-				# ${OBJDIR}/gui.bqt_layout_element.o
+				${OBJDIR}/gui.bqt_gui_resource.o
 
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 				${OBJDIR}/cocoa_main.o
