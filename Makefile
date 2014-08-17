@@ -118,7 +118,8 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/threading.bqt_rwlock.o \
 				${OBJDIR}/threading.bqt_semaphore.o \
 				${OBJDIR}/threading.bqt_threadutil.o \
-				${OBJDIR}/threading.bqt_thread.o #\
+				${OBJDIR}/threading.bqt_thread.o  \
+				${OBJDIR}/gui.bqt_gui_element.o #\
 				# ${OBJDIR}/gui.bqt_gui_button.o \
 				# ${OBJDIR}/gui.bqt_gui_resource.o \
 				# ${OBJDIR}/gui.bqt_gui_texture.o \
