@@ -39,7 +39,7 @@ FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
 LINKS = -lGL -lGLEW -lpng
 FRAMEWORKS = -framework Foundation -framework AppKit
-DEFINES = -DDEBUG -DPLATFORM_XWS_GNUPOSIX
+DEFINES = -g -DDEBUG -DPLATFORM_XWS_GNUPOSIX
 
 ################################################################################
 
@@ -65,6 +65,11 @@ osx_install: osx
 
 linux_install: linux
 	cd "${MAKEDIR}/${PROJNAME}"; sudo ./install_linux.sh
+
+################################################################################
+
+# linux_profile: linux
+# 	valgrind --tool=callgrind "${MAKEDIR}/${PROJNAME}/Linux/${PROJNAME}" -d
 
 ################################################################################
 
