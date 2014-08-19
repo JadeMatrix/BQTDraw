@@ -109,6 +109,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/bqt_keycode.o \
 				${OBJDIR}/bqt_launchargs.o \
 				${OBJDIR}/bqt_main.o \
+				${OBJDIR}/bqt_platform.c.o \
 				${OBJDIR}/bqt_png.o \
 				${OBJDIR}/bqt_preferences.o \
 				${OBJDIR}/bqt_taskexec.o \
@@ -171,6 +172,10 @@ ${OBJDIR}/unix_%.o: ${SOURCEDIR}/unix_%.cpp
 ${OBJDIR}/cocoa_%.o: ${SOURCEDIR}/cocoa_%.m
 	mkdir -p ${OBJDIR}
 	${OBJCC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/cocoa_$*.o
+
+${OBJDIR}/bqt_%.c.o: ${SOURCEDIR}/bqt_%.c
+	mkdir -p ${OBJDIR}
+	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.c.o
 
 ${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
 	mkdir -p ${OBJDIR}
