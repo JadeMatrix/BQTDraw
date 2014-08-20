@@ -27,7 +27,7 @@
 #define PREFERENCE_BLOCKEXPONENT    8
 #define PREFERENCE_BLOCKEXP_RMAX    7
 #define PREFERENCE_MAXUNDO          -1
-#define PREFERENCE_CLICKDISTMM      3.0f
+#define PREFERENCE_SCROLLDIST       50.0f
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/
 
@@ -38,7 +38,7 @@ namespace
     bool          quit_on_no_windows;
     unsigned char block_exponent;
     long          max_undo_steps;
-    float         click_dist_mm;
+    float         wheel_scroll_dist;
 }
 
 /******************************************************************************//******************************************************************************/
@@ -63,7 +63,7 @@ namespace bqt
         quit_on_no_windows = PREFERENCE_QUITONNOWINDOW;
         block_exponent     = PREFERENCE_BLOCKEXPONENT;
         max_undo_steps     = PREFERENCE_MAXUNDO;
-        click_dist_mm      = PREFERENCE_CLICKDISTMM;
+        wheel_scroll_dist  = PREFERENCE_SCROLLDIST;
     }
     
     // Quit on no windows //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +78,7 @@ namespace bqt
     }
     bool getQuitOnNoWindows()
     {
-        scoped_lock< rwlock > slock( pref_lock );
+        scoped_lock< rwlock > slock( pref_lock, RW_READ );
         
         return quit_on_no_windows;
     }
@@ -105,7 +105,7 @@ namespace bqt
     }
     unsigned char getBlockExponent()
     {
-        scoped_lock< rwlock > slock( pref_lock );
+        scoped_lock< rwlock > slock( pref_lock, RW_READ );
         
         return block_exponent;
     }
@@ -141,7 +141,7 @@ namespace bqt
     }
     long getMaxUndoSteps()
     {
-        scoped_lock< rwlock > slock( pref_lock );
+        scoped_lock< rwlock > slock( pref_lock, RW_READ );
         
         return max_undo_steps;
     }
@@ -168,26 +168,26 @@ namespace bqt
             ff::write( bqt_out, "Could not set max undo/redo steps\n" );
     }
     
-    // Click distance //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Wheel scroll distance ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    bool tryClickDistance()
+    bool tryWheelScrollDistance()
     {
         return true;
     }
-    float getClickDistance()
+    float getWheelScrollDistance()
     {
-        scoped_lock< rwlock > slock( pref_lock );
+        scoped_lock< rwlock > slock( pref_lock, RW_READ );
         
-        return click_dist_mm;
+        return wheel_scroll_dist;
     }
-    void setClickDistance( float d )
+    void setWheelScrollDistance( float d )
     {
         scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
         
-        if( tryClickDistance() )
-            click_dist_mm = d;
+        if( tryWheelScrollDistance() )
+            wheel_scroll_dist = d;
         else
-            ff::write( bqt_out, "Could not set click distance\n" );
+            ff::write( bqt_out, "Could not set wheel scroll distance\n" );
     }
 }
 

@@ -36,8 +36,8 @@ FFBUILD = gcc47.unix
 FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
-INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include
-LINKS = -lGL -lGLEW -lpng
+INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include -I/usr/include/lua5.2
+LINKS = -lGL -lGLEW -lpng -llua5.2
 FRAMEWORKS = -framework Foundation -framework AppKit
 DEFINES = -g -DDEBUG -DPLATFORM_XWS_GNUPOSIX
 
@@ -119,16 +119,18 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/bqt_window.o \
 				${OBJDIR}/bqt_windowevent.o \
 				${OBJDIR}/bqt_windowmanagement.o \
+				${OBJDIR}/gui.bqt_gui_button.o \
+				${OBJDIR}/gui.bqt_gui_dial.o \
+				${OBJDIR}/gui.bqt_gui_element.o \
+				${OBJDIR}/gui.bqt_gui_group.o \
+				${OBJDIR}/gui.bqt_gui_resource.o \
+				${OBJDIR}/gui.bqt_gui_tabset.o \
 				${OBJDIR}/threading.bqt_condition.o \
 				${OBJDIR}/threading.bqt_mutex.o \
 				${OBJDIR}/threading.bqt_rwlock.o \
 				${OBJDIR}/threading.bqt_semaphore.o \
 				${OBJDIR}/threading.bqt_threadutil.o \
-				${OBJDIR}/threading.bqt_thread.o  \
-				${OBJDIR}/gui.bqt_gui_button.o  \
-				${OBJDIR}/gui.bqt_gui_dial.o  \
-				${OBJDIR}/gui.bqt_gui_element.o  \
-				${OBJDIR}/gui.bqt_gui_resource.o
+				${OBJDIR}/threading.bqt_thread.o
 
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 				${OBJDIR}/cocoa_main.o
@@ -176,7 +178,7 @@ ${OBJDIR}/cocoa_%.o: ${SOURCEDIR}/cocoa_%.m
 
 ${OBJDIR}/bqt_%.c.o: ${SOURCEDIR}/bqt_%.c
 	mkdir -p ${OBJDIR}
-	${CPPC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.c.o
+	${CC} ${DEFINES} -c ${INCLUDE} $? -o ${OBJDIR}/bqt_$*.c.o
 
 ${OBJDIR}/bqt_%.o: ${SOURCEDIR}/bqt_%.cpp
 	mkdir -p ${OBJDIR}
