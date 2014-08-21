@@ -123,6 +123,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/gui.bqt_gui_dial.o \
 				${OBJDIR}/gui.bqt_gui_element.o \
 				${OBJDIR}/gui.bqt_gui_group.o \
+				${OBJDIR}/gui.bqt_gui_image_rsrc.o \
 				${OBJDIR}/gui.bqt_gui_resource.o \
 				${OBJDIR}/gui.bqt_gui_tabset.o \
 				${OBJDIR}/threading.bqt_condition.o \
