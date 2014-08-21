@@ -51,6 +51,9 @@ clean:
 todo:
 	grep -nr --include \* --exclude-dir=make "TODO:[ ]\+" .  # Using '[ ]' so the grep line is ignored by grep
 
+linecount:
+	wc -l `find ./src -type f`
+
 ################################################################################
 
 PROJNAME = BQTDraw
@@ -199,6 +202,6 @@ ${OBJDIR}/x_%.o: ${SOURCEDIR}/x_%.cpp
 
 ################################################################################
 
-.PHONY: fastformat build_linux build_osx osx linux windows clean todo
+.PHONY: fastformat build_linux build_osx osx linux windows clean todo linecount
 
 
