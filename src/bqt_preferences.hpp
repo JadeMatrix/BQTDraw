@@ -39,6 +39,16 @@ namespace bqt
     bool  tryWheelScrollDistance();
     float getWheelScrollDistance();
     void  setWheelScrollDistance( float d );
+    
+    bool                    tryDefaultWindowDimensions();
+    std::pair< unsigned int,
+               unsigned int > getDefaultWindowDimensions();
+    void                    setDefaultWindowDimensions( unsigned int w,
+                                                        unsigned int h );
+    
+    bool tryDialCircularManip();
+    bool getDialCircularManip();
+    void setDialCircularManip( bool m );
 }
 
 /******************************************************************************//******************************************************************************/

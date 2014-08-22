@@ -28,6 +28,9 @@
 #define PREFERENCE_BLOCKEXP_RMAX    7
 #define PREFERENCE_MAXUNDO          -1
 #define PREFERENCE_SCROLLDIST       50.0f
+#define PREFERENCE_DEFAULT_WINDOW_W 256
+#define PREFERENCE_DEFAULT_WINDOW_H 256
+#define PREFERENCE_DEFAULT_DIALCIRC false
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/
 
@@ -39,6 +42,8 @@ namespace
     unsigned char block_exponent;
     long          max_undo_steps;
     float         wheel_scroll_dist;
+    unsigned int  default_window_dimensions[ 2 ];
+    bool          dial_circular_manip;
 }
 
 /******************************************************************************//******************************************************************************/
@@ -64,6 +69,9 @@ namespace bqt
         block_exponent     = PREFERENCE_BLOCKEXPONENT;
         max_undo_steps     = PREFERENCE_MAXUNDO;
         wheel_scroll_dist  = PREFERENCE_SCROLLDIST;
+        default_window_dimensions[ 0 ] = PREFERENCE_DEFAULT_WINDOW_W;
+        default_window_dimensions[ 1 ] = PREFERENCE_DEFAULT_WINDOW_H;
+        dial_circular_manip = PREFERENCE_DEFAULT_DIALCIRC;
     }
     
     // Quit on no windows //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,6 +196,48 @@ namespace bqt
             wheel_scroll_dist = d;
         else
             ff::write( bqt_out, "Could not set wheel scroll distance\n" );
+    }
+    
+    // Default window dimensions ///////////////////////////////////////////////
+    
+    bool tryDefaultWindowDimensions()
+    {
+        return true;
+    }
+    std::pair< unsigned int, unsigned int > getDefaultWindowDimensions()
+    {
+        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        
+        return std::pair< unsigned int, unsigned int >( default_window_dimensions[ 0 ],
+                                                        default_window_dimensions[ 1 ] );
+    }
+    void setDefaultWindowDimensions( unsigned int w, unsigned int h )
+    {
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        
+        default_window_dimensions[ 0 ] = w;
+        default_window_dimensions[ 1 ] = h;
+    }
+    
+    // Dial circular manipulation //////////////////////////////////////////////
+    
+    bool tryDialCircularManip()
+    {
+        return true;
+    }
+    bool getDialCircularManip()
+    {
+        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        
+        return dial_circular_manip;
+    }
+    void setDialCircularManip( bool m )
+    {
+        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        
+        if( m )
+            ff::write( bqt_out, "Warning: Enabling circular dial manipulation (buggy)" );
+        dial_circular_manip = m;
     }
 }
 
