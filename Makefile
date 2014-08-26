@@ -36,8 +36,8 @@ FFBUILD = gcc47.unix
 FFOBJDIR = ${FASTFORMAT_ROOT}/build/${FFBUILD}
 
 # Headers & librarires
-INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include -I/usr/include/lua5.2
-LINKS = -lGL -lGLEW -lpng -llua5.2
+INCLUDE = -I${FASTFORMAT_ROOT}/include -I${STLSOFT}/include `pkg-config --cflags lua5.2 libpng gl glew pangocairo`
+LINKS = -lm `pkg-config --libs lua5.2 libpng gl glew pangocairo`
 FRAMEWORKS = -framework Foundation -framework AppKit
 DEFINES = -g -DDEBUG -DPLATFORM_XWS_GNUPOSIX
 
@@ -129,6 +129,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/gui.bqt_gui_image_rsrc.o \
 				${OBJDIR}/gui.bqt_gui_resource.o \
 				${OBJDIR}/gui.bqt_gui_tabset.o \
+				${OBJDIR}/gui.bqt_gui_text_rsrc.o \
 				${OBJDIR}/threading.bqt_condition.o \
 				${OBJDIR}/threading.bqt_mutex.o \
 				${OBJDIR}/threading.bqt_rwlock.o \
