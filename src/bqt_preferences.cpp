@@ -12,7 +12,7 @@
 #include <cmath>
 
 #include "bqt_imagemode.hpp"
-#include "threading/bqt_rwlock.hpp"
+#include "threading/bqt_mutex.hpp"
 #include "bqt_log.hpp"
 #include "bqt_exception.hpp"
 #include "bqt_launchargs.hpp"
@@ -36,7 +36,7 @@
 
 namespace
 {
-    bqt::rwlock pref_lock;
+    bqt::mutex pref_mutex;
     
     bool          quit_on_no_windows;
     unsigned char block_exponent;
@@ -52,7 +52,7 @@ namespace bqt
 {
     void loadPreferencesFile( std::string f )
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         resetPreferencesToDefaults();
         
@@ -60,7 +60,7 @@ namespace bqt
     }
     void resetPreferencesToDefaults()
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         if( getDevMode() )
             ff::write( bqt_out, "Setting preferences to defaults\n" );
@@ -86,13 +86,13 @@ namespace bqt
     }
     bool getQuitOnNoWindows()
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        scoped_lock< mutex > slock( pref_mutex );
         
         return quit_on_no_windows;
     }
     void setQuitOnNoWindows( bool s )
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         if( tryQuitOnNoWindows() )
             quit_on_no_windows = s;
@@ -113,13 +113,13 @@ namespace bqt
     }
     unsigned char getBlockExponent()
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        scoped_lock< mutex > slock( pref_mutex );
         
         return block_exponent;
     }
     void setBlockExponent( unsigned char e )
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         if( e < BLOCKEXPONENT_MIN || e > BLOCKEXPONENT_MAX )
             throw exception( "Block size exponent must be between " MACROTOSTR( BLOCKEXPONENT_MIN ) " and " MACROTOSTR( BLOCKEXPONENT_MAX ) );
@@ -149,13 +149,13 @@ namespace bqt
     }
     long getMaxUndoSteps()
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        scoped_lock< mutex > slock( pref_mutex );
         
         return max_undo_steps;
     }
     void setMaxUndoSteps( long s )
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         if( s < -1 )
             throw exception( "Max undo/redo steps must be -1 or greater" );
@@ -184,13 +184,13 @@ namespace bqt
     }
     float getWheelScrollDistance()
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        scoped_lock< mutex > slock( pref_mutex );
         
         return wheel_scroll_dist;
     }
     void setWheelScrollDistance( float d )
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         if( tryWheelScrollDistance() )
             wheel_scroll_dist = d;
@@ -206,14 +206,14 @@ namespace bqt
     }
     std::pair< unsigned int, unsigned int > getDefaultWindowDimensions()
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        scoped_lock< mutex > slock( pref_mutex );
         
         return std::pair< unsigned int, unsigned int >( default_window_dimensions[ 0 ],
                                                         default_window_dimensions[ 1 ] );
     }
     void setDefaultWindowDimensions( unsigned int w, unsigned int h )
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         default_window_dimensions[ 0 ] = w;
         default_window_dimensions[ 1 ] = h;
@@ -227,13 +227,13 @@ namespace bqt
     }
     bool getDialCircularManip()
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_READ );
+        scoped_lock< mutex > slock( pref_mutex );
         
         return dial_circular_manip;
     }
     void setDialCircularManip( bool m )
     {
-        scoped_lock< rwlock > slock( pref_lock, RW_WRITE );
+        scoped_lock< mutex > slock( pref_mutex );
         
         if( m )
             ff::write( bqt_out, "Warning: Enabling circular dial manipulation (buggy)" );

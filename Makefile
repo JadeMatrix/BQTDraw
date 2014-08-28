@@ -134,7 +134,6 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/gui.bqt_named_resources.o \
 				${OBJDIR}/threading.bqt_condition.o \
 				${OBJDIR}/threading.bqt_mutex.o \
-				${OBJDIR}/threading.bqt_rwlock.o \
 				${OBJDIR}/threading.bqt_semaphore.o \
 				${OBJDIR}/threading.bqt_threadutil.o \
 				${OBJDIR}/threading.bqt_thread.o
