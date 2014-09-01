@@ -141,7 +141,8 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 OSX_OBJECTS =	${OBJDIR}/cocoa_appdelegate.o \
 				${OBJDIR}/cocoa_main.o
 
-LINUX_OBJECTS = ${OBJDIR}/x_main.o
+LINUX_OBJECTS = ${OBJDIR}/x_inputdevices.o \
+				${OBJDIR}/x_main.o
 
 # FastFormat is statically linked due to the non-standard build methods the
 # project uses.  Until it is updated to use Autotools it should remain statical-
