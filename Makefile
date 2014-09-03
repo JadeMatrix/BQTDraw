@@ -97,6 +97,7 @@ linux: build_linux
 	cp "${RESOURCEDIR}/${PROJNAME}_app_256p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_256p.png"
 	cp "${RESOURCEDIR}/${PROJNAME}_app_512p.png" "${MAKEDIR}/${PROJNAME}/Resources/${PROJNAME}_app_512p.png"
 	cp "${RESOURCEDIR}/gui_resources.png" "${MAKEDIR}/${PROJNAME}/Resources/gui_resources.png"
+	cp "${RESOURCEDIR}/gui_icons.png" "${MAKEDIR}/${PROJNAME}/Resources/gui_icons.png"
 
 windows:
 	# Not supported yet
