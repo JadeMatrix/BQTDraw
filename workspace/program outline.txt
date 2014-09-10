@@ -1,0 +1,63 @@
+- Program
+  - Settings
+    - 
+- Document/Canvas
+  - Contents
+    - Zero or more layers
+    - Metadata
+      - Edit history
+      - Creator & copyright info
+  - Settings
+    - Zero or more layer templates (default units, DPU, etc.)
+    - Canvas geometry
+      - Canvas units
+      - Dimensions
+      - Bleed
+      - Color
+      - Global guides
+- Layer
+  - Contents
+    - One or more sketches
+  - Settings
+    - Name
+    - Units
+    - Dimensions
+    - Canvas offset
+    - DPU
+    - Sketch settings
+      - Number visible
+      - For each visible
+        - Channels settings override
+        - Dot settings override
+        - Transparency
+- Sketch
+  - Contents
+    - Per chanel
+      - Sparse bitmap quad tree of pixels
+  - Settings
+    - Parent DPU division exponent
+    - Channel settings
+      - One or more chanels, for each:
+        - Color
+    - Dot settings
+      - Saved setting, custom, or inherited
+      - Shape
+        - Square (no size or bleed)
+        - Round
+      - Size
+        - In units/10^n
+        - In % of spacing
+      - Bleed (%)
+- Color
+  - Contents
+  - Settings
+- Pattern
+  - Halftone
+    - Per channel
+      - Pitch
+      - Offset
+  - Image
+
+
+Things to consider:
+- Separate horizontal & vertical DPUs, dot size
