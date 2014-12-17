@@ -124,6 +124,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/bqt_windowevent.o \
 				${OBJDIR}/bqt_windowmanagement.o \
 				${OBJDIR}/gui.bqt_gui_button.o \
+				${OBJDIR}/gui.bqt_gui_canvasview.o \
 				${OBJDIR}/gui.bqt_gui_dial.o \
 				${OBJDIR}/gui.bqt_gui_element.o \
 				${OBJDIR}/gui.bqt_gui_group.o \
