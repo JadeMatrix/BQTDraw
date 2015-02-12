@@ -14,7 +14,7 @@
 
 #include "bqt_exception.hpp"
 #include "threading/bqt_mutex.hpp"
-#include "bqt_preferences.hpp"
+#include "bqt_settings.hpp"
 
 /* INTERNAL GLOBALS ***********************************************************//******************************************************************************/
 
@@ -33,7 +33,7 @@ namespace bqt
     raw allocBitmapSpace( img_mode* mode,
                           raw original )
     {
-        unsigned char exponent = getBlockExponent();
+        unsigned char exponent = getSetting_num( "bqt_BlockExponent" );
         
         if( mode == NULL || exponent < BLOCKEXPONENT_MIN || exponent > BLOCKEXPONENT_MAX )
             throw exception( "allocBitmapSpace(): Invalid parameters" );
@@ -79,7 +79,7 @@ namespace bqt
             pack_spaces.pop();
         }
         else
-            got = new float[ 4 * ( int )pow( 2, getBlockExponent() * 2 ) ];     // No registration involved
+            got = new float[ 4 * ( int )pow( 2, getSetting_num( "bqt_BlockExponent" ) * 2 ) ];     // No registration involved
         
         return got;
     }

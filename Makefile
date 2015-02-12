@@ -115,7 +115,7 @@ CORE_OBJECTS =	${OBJDIR}/bqt_events.o \
 				${OBJDIR}/bqt_main.o \
 				${OBJDIR}/bqt_platform.c.o \
 				${OBJDIR}/bqt_png.o \
-				${OBJDIR}/bqt_preferences.o \
+				${OBJDIR}/bqt_settings.o \
 				${OBJDIR}/bqt_taskexec.o \
 				${OBJDIR}/bqt_taskqueue.o \
 				${OBJDIR}/bqt_timestamp.o \
