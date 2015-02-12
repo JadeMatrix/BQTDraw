@@ -173,6 +173,7 @@ build_linux: ${CORE_OBJECTS} ${LINUX_OBJECTS}
 	${CPPC} -o "${BUILDDIR}/${PROJNAME}" ${LINKS} -lpthread -lX11 -lXext -lXi $? ${FF_OBJECTS}
 
 fastformat:
+	@echo Trying to automatically build FastFormat\; makefile may need manual editing to compile on some platforms
 	cd ${FFOBJDIR}; make build.libs.core
 
 ################################################################################
